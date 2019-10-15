@@ -1,0 +1,88 @@
+<template>
+    <div>
+        <Header></Header>
+        <div class="mui-content">
+            <div class="mui-content-padded">
+                <button type="button" @click="jgdadd" class="mui-btn mui-btn-primary mui-btn-block">填写加工单</button>
+            </div>
+            <div class="mui-card" id="container-jgd-list">
+              <ul class="mui-table-view">
+                <li v-for="(item,index) in items" @click="jgdInfo(item)" class="mui-table-view-cell" :key="index">
+                  <a class="mui-navigate-right" href="javascript:;"><span v-if="item.Processing" class="mui-badge mui-badge-primary">待处理</span>单号：{{ item.OrderNo }}</a>
+                </li>
+              </ul>
+            </div>
+            <div class="mui-content-padded">
+                <ul class="mui-pager">
+                    <li>
+                        <a href="#">
+                            上一页
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            下一页
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <Footer></Footer>
+    </div>
+</template>
+<script>
+
+import Header from '../Header'
+import Footer from '../Footer'
+import '../../../static/css/mui.min.css'
+import axios from 'axios'
+export default {
+  name: 'JgdList',
+  components: {
+    Header,
+    Footer
+  },
+  data () {
+    return { items: [] }
+  },
+  created: function () {
+    this.GLOBAL.HeaderText = '加工单列表'
+    this.loadData()
+  },
+  methods: {
+    loadData: function () {
+      var _this = this
+      _this.$loading('加载中...')
+      axios.get('/handler/user/processingorder/list', {})
+        .then(function (res) {
+          console.log(res)
+          console.log(_this)
+          _this.items = res.data.data
+          _this.$loading.close()
+        })
+        .catch(function (error) {
+          console.log(error)
+          _this.$loading.close()
+        })
+    },
+    jgdadd () {
+      this.$router.push({
+        path: '/JgdAdd',
+        query: {
+          id: 123
+        }
+      })
+    },
+    jgdInfo (item) {
+      // console.log('item:' + item.OrderNo)
+      this.$router.push({
+        name: 'JgdInfo',
+        params: item
+      })
+    }
+  }
+}
+</script>
+<style scoped>
+
+</style>
