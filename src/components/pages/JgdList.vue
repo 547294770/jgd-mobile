@@ -8,7 +8,15 @@
             <div class="mui-card" id="container-jgd-list">
               <ul class="mui-table-view">
                 <li v-for="(item,index) in items" @click="jgdInfo(item)" class="mui-table-view-cell" :key="index">
-                  <a class="mui-navigate-right" href="javascript:;"><span v-if="item.Processing" class="mui-badge mui-badge-primary">待处理</span>单号：{{ item.OrderNo }}</a>
+                  <a class="mui-navigate-right" href="javascript:;">
+                    <span v-if="item.Status=='None'" class="mui-badge mui-badge-primary">待提交</span>
+                    <span v-if="item.Status=='Uploaded'" class="mui-badge mui-badge-primary">待确认加工内容</span>
+                    <span v-if="item.Status=='Print'" class="mui-badge mui-badge-primary">待确认送货方式</span>
+                    <span v-if="item.Status=='ConfirmDeliveryMethod'" class="mui-badge mui-badge-primary">待录入送货资料</span>
+                    <span v-if="item.Status=='NoticeDelivery'" class="mui-badge mui-badge-primary">待确提交送货信息</span>
+                    <span v-if="item.Status=='AlreadyGoods'" class="mui-badge mui-badge-primary">待确认加工费</span>
+                    <span v-if="item.Status=='Shipped'" class="mui-badge mui-badge-primary">待确认完结</span>
+                    单号：{{ item.OrderNo }}</a>
                 </li>
               </ul>
             </div>
