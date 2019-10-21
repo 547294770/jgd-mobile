@@ -20,6 +20,13 @@
                 <a v-bind:href="item.FilePath" target="_blank">{{index}}.{{item.Name}}</a>
               </li>
             </ul>
+            <div v-if="Fee.length>0">
+              <h5>加工费：</h5>
+              <div v-for="(item,index) in Fee" :key="index">
+                <div>{{item.TypeName}}</div>
+                <div>{{item.Content}}</div>
+              </div>
+            </div>
             <div v-if="Status=='Uploaded'">
               <input type="file" ref="fileInt"><button @click="changeHandle">上传</button>
             </div>
@@ -46,11 +53,25 @@
                 </div>
               </div>
             </div>
+            <div v-if="Status=='NoticePickUp'">
+              <div v-if="DelType=='Self'">
+                <h5>提货日期：</h5><input type="date" v-model="PickUp.PickUpAt"  />
+                <h5>提货内容：</h5>
+                <div class="mui-input-row" style="margin: 10px 5px;">
+                  <textarea id="textarea" v-model="PickUp.Content" rows="4" placeholder="填写提货内容说明。"></textarea>
+                </div>
+                <h5>车辆信息：</h5>
+                <div class="mui-input-row" style="margin: 10px 5px;">
+                  <textarea id="textarea1"  v-model="PickUp.VehicleInfo" rows="2" placeholder="车牌、提货人联系方式、姓名等。"></textarea>
+                </div>
+              </div>
+            </div>
             <div class="mui-content-padded">
               <a v-if="Status=='None'" href="#" @click="saveOrder(ID)" class="mui-btn mui-btn-primary">提交</a>
               <a v-if="Status=='Uploaded'" href="#" @click="saveOrder(ID)" class="mui-btn mui-btn-primary">提交确认</a>
               <a v-if="Status=='Print'" href="#" @click="saveOrder(ID)" class="mui-btn mui-btn-success">确认送货方式</a>
               <a v-if="Status=='ConfirmDeliveryMethod'" href="#" @click="saveOrder(ID)" class="mui-btn mui-btn-success">提交送货资料</a>
+              <a v-if="Status=='NoticePickUp'" href="#" @click="saveOrder(ID)" class="mui-btn mui-btn-success">提交提货资料</a>
               <a v-if="Status=='Produced'" href="#" @click="saveOrder(ID)" class="mui-btn mui-btn-success">填写提货单</a>
               <a v-if="Status=='AlreadyGoods'" href="#" @click="saveOrder(ID)" class="mui-btn mui-btn-success">确认加工费</a>
               <a v-if="Status=='Shipped'" href="#" @click="saveOrder(ID)" class="mui-btn mui-btn-success">确认完成</a>
@@ -81,11 +102,18 @@ export default {
       Status: 0,
       DelType: 'None',
       Attachment: [],
+      Fee: [],
       Delivery: {
         Content: '',
         VehicleInfo: '',
         SourceID: '',
         DeliveryAt: ''
+      },
+      PickUp: {
+        Content: '',
+        VehicleInfo: '',
+        SourceID: '',
+        PickUpAt: ''
       }
     }
   },
@@ -93,6 +121,7 @@ export default {
     this.GLOBAL.HeaderText = '加工单明细'
     this.initPageData()
     this.loadattachment()
+    this.loadfee()
   },
   methods: {
     initPageData: function () {
@@ -137,6 +166,22 @@ export default {
         _this.$loading.close()
       })
     },
+    loadfee () {
+      let params = this.$route.params
+      var _this = this
+      axios.post('/handler/user/processingorder/fee', qs.stringify({
+        OrderID: params.ID
+      })).then(function (res) {
+        _this.Fee = []
+        for (var index = 0; index < res.data.data.length; index++) {
+          _this.Fee[index] = res.data.data[index]
+        }
+        _this.$loading.close()
+      }).catch(function (error) {
+        console.log(error)
+        _this.$loading.close()
+      })
+    },
     saveOrder (orderid) {
       var _this = this
       _this.$loading('正在提交')
@@ -145,7 +190,8 @@ export default {
         DelType: _this.DelType,
         AttachmentLength: _this.Attachment.length,
         Attachment: _this.Attachment,
-        Delivery: _this.Delivery
+        Delivery: _this.Delivery,
+        PickUp: _this.PickUp
       })).then(function (res) {
         _this.$toast.bottom(res.data.msg)
         _this.$loading.close()
