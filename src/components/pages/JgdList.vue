@@ -3,7 +3,8 @@
         <Header></Header>
         <div class="mui-content">
             <div class="mui-content-padded">
-                <button type="button" @click="jgdadd" class="mui-btn mui-btn-primary mui-btn-block">填写加工单</button>
+              <a class="btn btn-primary" style="display:block" @click="jgdadd">
+  <i class="fa fa-edit fa-lg"></i> 填写加工单</a>
             </div>
             <div class="mui-card" id="container-jgd-list">
               <ul class="mui-table-view">
@@ -43,6 +44,8 @@
 import Header from '../Header'
 import Footer from '../Footer'
 import '../../../static/css/mui.min.css'
+import '../../../static/css/font-awesome.min.css'
+import '../../../static/css/font-awesome.padding.css'
 import axios from 'axios'
 export default {
   name: 'JgdList',

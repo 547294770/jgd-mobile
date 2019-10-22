@@ -10,6 +10,9 @@ import Header from './Header'
 import Content from './Content'
 import Footer from './Footer'
 import '../../static/css/mui.min.css'
+import '../../static/css/font-awesome.min.css'
+import '../../static/css/font-awesome.padding.css'
+
 export default {
   name: 'Home',
   components: {
@@ -23,5 +26,7 @@ export default {
 }
 </script>
 <style scoped>
-
+.fa{
+  font-size: 2.4em;
+}
 </style>
