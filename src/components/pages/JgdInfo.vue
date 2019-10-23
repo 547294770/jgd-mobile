@@ -1,80 +1,100 @@
 <template>
     <div>
         <Header></Header>
-          <div class="mui-content-padded mt60">
-              <h5>加工单号：</h5>
-              <div class="mui-input-row">
-                <h4>{{OrderNo}}</h4>
-              </div>
-              <h5>下单时间：</h5>
-              <div class="mui-input-row"><p>{{CreateAt}}</p></div>
-              <h5>送货方式：</h5>
-              <div class="mui-input-row"><p>{{DelType}}</p></div>
-            <h5>加工内容：</h5>
-            <div class="mui-input-row">
-              <p>{{Content}}</p>
-            </div>
-            <h5>附件：</h5>
-            <ul>
-              <li v-for="(item,index) in Attachment" :key="index">
-                <a v-bind:href="item.FilePath" target="_blank">{{index}}.{{item.Name}}</a>
-              </li>
-            </ul>
-            <div v-if="Fee.length>0">
-              <h5>加工费：</h5>
-              <div v-for="(item,index) in Fee" :key="index">
-                <div>{{item.TypeName}}</div>
-                <div>{{item.Content}}</div>
+          <div class="mui-card mt60">
+            <!--页眉，放置标题-->
+            <div class="mui-card-header">加工单信息</div>
+            <!--内容区-->
+            <div class="mui-card-content">
+              <div class="detail">
+                <p><b>加工单号：</b><span>{{OrderNo}}</span></p>
+                <p><b>下单时间：</b><span>{{CreateAt}}</span></p>
+                <p><b>送货方式：</b><span>{{DelType}}</span></p>
+                <p><b>加工内容：</b><span>{{Content}}</span></p>
               </div>
             </div>
-            <div v-if="Status=='Uploaded'">
-              <input type="file" ref="fileInt"><button @click="changeHandle">上传</button>
-            </div>
-            <div v-if="Status=='Print'">
-              <div class="mui-input-row mui-radio">
-                <label>自送</label>
-                <input name="DelType" v-model="DelType" value="Self" type="radio">
-              </div>
-              <div class="mui-input-row mui-radio">
-                <label>利迅达提货</label>
-                <input name="DelType" v-model="DelType" value="LXD" type="radio">
-              </div>
-            </div>
-            <div v-if="Status=='ConfirmDeliveryMethod'">
-              <div v-if="DelType=='Self'">
-                <h5>送货日期：</h5><input type="date" v-model="Delivery.DeliveryAt"  />
-                <h5>材料内容：</h5>
-                <div class="mui-input-row" style="margin: 10px 5px;">
-                  <textarea id="textarea" v-model="Delivery.Content" rows="4" placeholder="填写材料内容说明。"></textarea>
-                </div>
-                <h5>车辆信息：</h5>
-                <div class="mui-input-row" style="margin: 10px 5px;">
-                  <textarea id="textarea1"  v-model="Delivery.VehicleInfo" rows="2" placeholder="车牌、送货人联系方式、姓名等。"></textarea>
+          </div>
+          <div v-if="Attachment.length > 0" class="mui-card">
+            <!--页眉，放置标题-->
+            <div class="mui-card-header">附件信息</div>
+            <!--内容区-->
+            <div class="mui-card-content">
+              <div class="detail">
+                <ul>
+                  <li v-for="(item,index) in Attachment" :key="index">
+                    <a v-bind:href="item.FilePath" target="_blank">{{index}}.{{item.Name}}</a>
+                  </li>
+                </ul>
+                <div v-if="Status=='Uploaded'">
+                  <input type="file" ref="fileInt"><button @click="changeHandle">上传</button>
                 </div>
               </div>
             </div>
-            <div v-if="Status=='NoticePickUp'">
-              <div v-if="DelType=='Self'">
-                <h5>提货日期：</h5><input type="date" v-model="PickUp.PickUpAt"  />
-                <h5>提货内容：</h5>
-                <div class="mui-input-row" style="margin: 10px 5px;">
-                  <textarea id="textarea" v-model="PickUp.Content" rows="4" placeholder="填写提货内容说明。"></textarea>
-                </div>
-                <h5>车辆信息：</h5>
-                <div class="mui-input-row" style="margin: 10px 5px;">
-                  <textarea id="textarea1"  v-model="PickUp.VehicleInfo" rows="2" placeholder="车牌、提货人联系方式、姓名等。"></textarea>
+          </div>
+          <div v-if="Fee.length > 0" class="mui-card">
+            <!--页眉，放置标题-->
+            <div class="mui-card-header">加工费</div>
+            <!--内容区-->
+            <div class="mui-card-content">
+              <div class="detail">
+                <div v-for="(item,index) in Fee" :key="index">
+                  <div>{{item.TypeName}}</div>
+                  <div>{{item.Content}}</div>
                 </div>
               </div>
             </div>
-            <div class="mui-content-padded">
-              <a v-if="Status=='None'" href="#" @click="saveOrder(ID)" class="mui-btn mui-btn-primary">提交</a>
-              <a v-if="Status=='Uploaded'" href="#" @click="saveOrder(ID)" class="mui-btn mui-btn-primary">提交确认</a>
-              <a v-if="Status=='Print'" href="#" @click="saveOrder(ID)" class="mui-btn mui-btn-success">确认送货方式</a>
-              <a v-if="Status=='ConfirmDeliveryMethod'" href="#" @click="saveOrder(ID)" class="mui-btn mui-btn-success">提交送货资料</a>
-              <a v-if="Status=='NoticePickUp'" href="#" @click="saveOrder(ID)" class="mui-btn mui-btn-success">提交提货资料</a>
-              <a v-if="Status=='Produced'" href="#" @click="saveOrder(ID)" class="mui-btn mui-btn-success">填写提货单</a>
-              <a v-if="Status=='AlreadyGoods'" href="#" @click="saveOrder(ID)" class="mui-btn mui-btn-success">确认加工费</a>
-              <a v-if="Status=='Shipped'" href="#" @click="saveOrder(ID)" class="mui-btn mui-btn-success">确认完成</a>
+          </div>
+          <div class="mui-card">
+            <!--内容区-->
+            <div class="mui-card-content">
+              <div class="detail">
+                <div v-if="Status=='Print'">
+                  <div class="mui-input-row mui-radio">
+                    <label>自送</label>
+                    <input name="DelType" v-model="DelType" value="Self" type="radio">
+                  </div>
+                  <div class="mui-input-row mui-radio">
+                    <label>利迅达提货</label>
+                    <input name="DelType" v-model="DelType" value="LXD" type="radio">
+                  </div>
+                </div>
+                <div v-if="Status=='ConfirmDeliveryMethod'">
+                  <div v-if="DelType=='Self'">
+                    <h5>送货日期：</h5><input type="date" v-model="Delivery.DeliveryAt"  />
+                    <h5>材料内容：</h5>
+                    <div class="mui-input-row" style="margin: 10px 5px;">
+                      <textarea id="textarea" v-model="Delivery.Content" rows="4" placeholder="填写材料内容说明。"></textarea>
+                    </div>
+                    <h5>车辆信息：</h5>
+                    <div class="mui-input-row" style="margin: 10px 5px;">
+                      <textarea id="textarea1"  v-model="Delivery.VehicleInfo" rows="2" placeholder="车牌、送货人联系方式、姓名等。"></textarea>
+                    </div>
+                  </div>
+                </div>
+                <div v-if="Status=='NoticePickUp'">
+                  <div v-if="DelType=='Self'">
+                    <h5>提货日期：</h5><input type="date" v-model="PickUp.PickUpAt"  />
+                    <h5>提货内容：</h5>
+                    <div class="mui-input-row" style="margin: 10px 5px;">
+                      <textarea id="textarea" v-model="PickUp.Content" rows="4" placeholder="填写提货内容说明。"></textarea>
+                    </div>
+                    <h5>车辆信息：</h5>
+                    <div class="mui-input-row" style="margin: 10px 5px;">
+                      <textarea id="textarea1"  v-model="PickUp.VehicleInfo" rows="2" placeholder="车牌、提货人联系方式、姓名等。"></textarea>
+                    </div>
+                  </div>
+                </div>
+                <div class="mui-content-padded">
+                  <a v-if="Status=='None'" href="#" @click="saveOrder(ID)" class="mui-btn mui-btn-primary">提交</a>
+                  <a v-if="Status=='Uploaded'" href="#" @click="saveOrder(ID)" class="mui-btn mui-btn-primary">提交确认</a>
+                  <a v-if="Status=='Print'" href="#" @click="saveOrder(ID)" class="mui-btn mui-btn-success">确认送货方式</a>
+                  <a v-if="Status=='ConfirmDeliveryMethod'" href="#" @click="saveOrder(ID)" class="mui-btn mui-btn-success">提交送货资料</a>
+                  <a v-if="Status=='NoticePickUp'" href="#" @click="saveOrder(ID)" class="mui-btn mui-btn-success">提交提货资料</a>
+                  <a v-if="Status=='Produced'" href="#" @click="saveOrder(ID)" class="mui-btn mui-btn-success">填写提货单</a>
+                  <a v-if="Status=='AlreadyGoods'" href="#" @click="saveOrder(ID)" class="mui-btn mui-btn-success">确认加工费</a>
+                  <a v-if="Status=='Shipped'" href="#" @click="saveOrder(ID)" class="mui-btn mui-btn-success">确认完成</a>
+                </div>
+              </div>
             </div>
           </div>
         <Footer></Footer>
@@ -235,6 +255,9 @@ export default {
 <style scoped>
 .mt60{
   margin-top: 60px
+}
+.detail{
+  padding: 10px 15px;
 }
 .mui-content-padded{
   margin-bottom: 60px;
