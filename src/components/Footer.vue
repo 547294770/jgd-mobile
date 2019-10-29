@@ -4,7 +4,7 @@
             <span class="mui-icon mui-icon-home"></span>
             <span class="mui-tab-label">首页</span>
         </a>
-        <a class="mui-tab-item" href="#tabbar-with-map">
+        <a class="mui-tab-item" href="#/Settings">
             <span class="mui-icon mui-icon-gear"></span>
             <span class="mui-tab-label">设置</span>
         </a>

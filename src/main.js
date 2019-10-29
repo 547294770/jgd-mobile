@@ -7,6 +7,7 @@ import globalVariable from './js/global_variable.js'
 
 Vue.config.productionTip = false
 Vue.prototype.GLOBAL = globalVariable
+Vue.prototype.USERINFO = null
 
 /* eslint-disable no-new */
 new Vue({

@@ -5,6 +5,7 @@
     </header>
 </template>
 <script>
+import axios from 'axios'
 export default {
   data () {
     return {
@@ -12,9 +13,25 @@ export default {
     }
   },
   name: 'Header',
+  created: function () {
+    this.getuserinfo()
+  },
   methods: {
     back: function () {
       this.$router.go(-1)
+    },
+    getuserinfo: function () {
+      axios.get('/handler/user/user/init', {})
+        .then(function (res) {
+          if (res && res.data.code === '2222') {
+            window.location = res.data.url
+          } else if (res) {
+            this.USERINFO = res.data
+          }
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
     }
   }
 }
