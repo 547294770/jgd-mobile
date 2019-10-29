@@ -21,12 +21,15 @@ export default {
     Footer
   },
   created () {
-    this.GLOBAL.HeaderText = '加工系统'
+    this.GLOBAL.HeaderText = '首页'
   }
 }
 </script>
 <style scoped>
 .fa{
   font-size: 2.4em;
+}
+.mui-table-view.mui-grid-view .mui-table-view-cell .mui-media-body {
+  margin-top: 10px;
 }
 </style>

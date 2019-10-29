@@ -84,18 +84,18 @@
                     </div>
                   </div>
                 </div>
-                <div class="mui-content-padded">
-                  <a v-if="Status=='None'" href="#" @click="saveOrder(ID)" class="mui-btn mui-btn-primary">提交</a>
-                  <a v-if="Status=='Uploaded'" href="#" @click="saveOrder(ID)" class="mui-btn mui-btn-primary">提交确认</a>
-                  <a v-if="Status=='Print'" href="#" @click="saveOrder(ID)" class="mui-btn mui-btn-success">确认送货方式</a>
-                  <a v-if="Status=='ConfirmDeliveryMethod'" href="#" @click="saveOrder(ID)" class="mui-btn mui-btn-success">提交送货资料</a>
-                  <a v-if="Status=='NoticePickUp'" href="#" @click="saveOrder(ID)" class="mui-btn mui-btn-success">提交提货资料</a>
-                  <a v-if="Status=='Produced'" href="#" @click="saveOrder(ID)" class="mui-btn mui-btn-success">填写提货单</a>
-                  <a v-if="Status=='AlreadyGoods'" href="#" @click="saveOrder(ID)" class="mui-btn mui-btn-success">确认加工费</a>
-                  <a v-if="Status=='Shipped'" href="#" @click="saveOrder(ID)" class="mui-btn mui-btn-success">确认完成</a>
-                </div>
               </div>
             </div>
+          </div>
+          <div class="mui-content-padded">
+            <a v-if="Status=='None'" href="#" @click="saveOrder(ID)" class="btn btn-primary block">提交</a>
+            <a v-if="Status=='Uploaded'" href="#" @click="saveOrder(ID)" class="btn btn-primary block">提交确认</a>
+            <a v-if="Status=='Print'" href="#" @click="saveOrder(ID)" class="btn btn-primary block">确认送货方式</a>
+            <a v-if="Status=='ConfirmDeliveryMethod'" href="#" @click="saveOrder(ID)" class="btn btn-primary block">提交送货资料</a>
+            <a v-if="Status=='NoticePickUp'" href="#" @click="saveOrder(ID)" class="btn btn-primary block">提交提货资料</a>
+            <a v-if="Status=='Produced'" href="#" @click="saveOrder(ID)" class="btn btn-primary block">填写提货单</a>
+            <a v-if="Status=='AlreadyGoods'" href="#" @click="saveOrder(ID)" class="btn btn-primary block">确认加工费</a>
+            <a v-if="Status=='Shipped'" href="#" @click="saveOrder(ID)" class="btn btn-primary block">确认收货</a>
           </div>
         <Footer></Footer>
     </div>

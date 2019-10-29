@@ -3,7 +3,7 @@
         <Header></Header>
         <div class="mui-content">
             <div class="mui-content-padded">
-              <a class="btn btn-primary" style="display:block" @click="jgdadd">
+              <a class="btn btn-primary block" @click="jgdadd">
   <i class="fa fa-edit fa-lg"></i> 填写加工单</a>
             </div>
             <div class="mui-card" id="container-jgd-list">
@@ -16,7 +16,7 @@
                     <span v-if="item.Status=='ConfirmDeliveryMethod'" class="mui-badge mui-badge-primary">待录入送货资料</span>
                     <span v-if="item.Status=='NoticePickUp'" class="mui-badge mui-badge-primary">待提交提货信息</span>
                     <span v-if="item.Status=='AlreadyGoods'" class="mui-badge mui-badge-primary">待确认加工费</span>
-                    <span v-if="item.Status=='Shipped'" class="mui-badge mui-badge-primary">待确认完结</span>
+                    <span v-if="item.Status=='Shipped'" class="mui-badge mui-badge-primary">待确认收货</span>
                     单号：{{ item.OrderNo }}</a>
                 </li>
               </ul>

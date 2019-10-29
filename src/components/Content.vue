@@ -3,7 +3,7 @@
         <div id="tabbar" class="mui-control-content mui-active">
             <ul class="mui-table-view mui-grid-view mui-grid-9">
                 <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#/JgdList">
-                    <span class="mui-icon fa fa-edit ffa"><span class="mui-badge">3</span></span>
+                    <span class="mui-icon fa fa-list ffa"><span class="mui-badge">3</span></span>
                     <div class="mui-media-body">需求单</div></a>
                 </li>
                 <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="delivery-list.html">
@@ -65,5 +65,7 @@ export default {
 }
 </script>
 <style scoped>
-
+.mui-table-view.mui-grid-view .mui-table-view-cell .mui-media-body {
+  margin-top: 10px;
+}
 </style>

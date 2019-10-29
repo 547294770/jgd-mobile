@@ -5,6 +5,8 @@ import Home from '@/components/Home'
 import JgdList from '@/components/pages/JgdList'
 import JgdAdd from '@/components/pages/JgdAdd'
 import JgdInfo from '@/components/pages/JgdInfo'
+import Login from '@/components/Login'
+import Register from '@/components/Register'
 
 import 'vue2-toast/lib/toast.css'
 import 'vuejs-dialog/dist/vuejs-dialog.min.css'
@@ -42,6 +44,16 @@ export default new Router({
       path: '/JgdInfo',
       name: 'JgdInfo',
       component: JgdInfo
+    },
+    {
+      path: '/Login',
+      name: 'Login',
+      component: Login
+    },
+    {
+      path: '/Register',
+      name: 'Register',
+      component: Register
     }
   ]
 })

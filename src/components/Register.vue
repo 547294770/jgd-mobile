@@ -1,0 +1,124 @@
+<template>
+    <div>
+      <Header></Header>
+      <div class="mui-content">
+        <form class="mui-input-group">
+          <div class="mui-input-row">
+            <label>账号</label>
+            <input id='account' type="text" class="mui-input-clear mui-input" placeholder="请输入账号">
+          </div>
+          <div class="mui-input-row">
+            <label>密码</label>
+            <input id='password' type="password" class="mui-input-clear mui-input" placeholder="请输入密码">
+          </div>
+          <div class="mui-input-row">
+            <label>确认</label>
+            <input id='password_confirm' type="password" class="mui-input-clear mui-input" placeholder="请确认密码">
+          </div>
+          <div class="mui-input-row">
+            <label>邮箱</label>
+            <input id='email' type="email" class="mui-input-clear mui-input" placeholder="请输入邮箱">
+          </div>
+        </form>
+        <div class="mui-content-padded">
+          <button id='reg' class="mui-btn mui-btn-block mui-btn-primary">注册</button>
+        </div>
+        <div class="mui-content-padded">
+          <p>注册真实可用，注册成功后的用户可用于登录，但是示例程序并未和服务端交互，用户相关数据仅存储于本地。</p>
+        </div>
+      </div>
+    </div>
+</template>
+<script>
+import Header from './Header'
+import Content from './Content'
+import Footer from './Footer'
+import '../../static/css/mui.min.css'
+import '../../static/css/font-awesome.min.css'
+import '../../static/css/font-awesome.padding.css'
+
+export default {
+  name: 'Home',
+  components: {
+    Header,
+    Content,
+    Footer
+  },
+  created () {
+    this.GLOBAL.HeaderText = '用户注册'
+  }
+}
+</script>
+<style scoped>
+  .ui-page-login,
+  body {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+  }
+.mui-content{height: 100%;}
+.area {
+    margin: 20px auto 0px auto;
+  }
+  .mui-input-group {
+    margin-top: 10px;
+  }
+  .mui-input-group:first-child {
+    margin-top: 20px;
+  }
+  .mui-input-group label {
+    width: 22%;
+  }
+  .mui-input-row label~input,
+  .mui-input-row label~select,
+  .mui-input-row label~textarea {
+    width: 78%;
+  }
+  .mui-checkbox input[type=checkbox],
+  .mui-radio input[type=radio] {
+    top: 6px;
+  }
+  .mui-content-padded {
+    margin-top: 25px;
+  }
+  .mui-btn {
+    padding: 10px;
+  }
+  .link-area {
+    display: block;
+    margin-top: 25px;
+    text-align: center;
+  }
+  .spliter {
+    color: #bbb;
+    padding: 0px 8px;
+  }
+  .oauth-area {
+    position: absolute;
+    bottom: 20px;
+    left: 0px;
+    text-align: center;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+  }
+  .oauth-area .oauth-btn {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    background-size: 30px 30px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    margin: 0px 20px;
+    /*-webkit-filter: grayscale(100%); */
+    border: solid 1px #ddd;
+    border-radius: 25px;
+  }
+  .oauth-area .oauth-btn:active {
+    border: solid 1px #aaa;
+  }
+  .oauth-area .oauth-btn.disabled {
+    background-color: #ddd;
+  }
+</style>
