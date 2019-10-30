@@ -3,9 +3,10 @@ import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import Home from '@/components/Home'
 import Settings from '@/components/Settings'
-import JgdList from '@/components/pages/JgdList'
-import JgdAdd from '@/components/pages/JgdAdd'
-import JgdInfo from '@/components/pages/JgdInfo'
+import PagesJgdList from '@/components/pages/JgdList'
+import PagesJgdAdd from '@/components/pages/JgdAdd'
+import PagesJgdInfo from '@/components/pages/JgdInfo'
+import PagesCompanyInfo from '@/components/pages/CompanyInfo'
 
 import 'vue2-toast/lib/toast.css'
 import 'vuejs-dialog/dist/vuejs-dialog.min.css'
@@ -30,24 +31,29 @@ export default new Router({
       component: Home
     },
     {
-      path: '/JgdList',
-      name: 'JgdList',
-      component: JgdList
+      path: '/Pages/JgdList',
+      name: 'PagesJgdList',
+      component: PagesJgdList
     },
     {
-      path: '/JgdAdd',
-      name: 'JgdAdd',
-      component: JgdAdd
+      path: '/Pages/JgdAdd',
+      name: 'PagesJgdAdd',
+      component: PagesJgdAdd
     },
     {
-      path: '/JgdInfo',
-      name: 'JgdInfo',
-      component: JgdInfo
+      path: '/Pages/JgdInfo',
+      name: 'PagesJgdInfo',
+      component: PagesJgdInfo
     },
     {
       path: '/Settings',
       name: 'Settings',
       component: Settings
+    },
+    {
+      path: '/Pages/CompanyInfo',
+      name: 'PagesCompanyInfo',
+      component: PagesCompanyInfo
     }
   ]
 })

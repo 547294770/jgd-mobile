@@ -1,10 +1,10 @@
 <template>
     <nav class="mui-bar mui-bar-tab">
-        <a class="mui-tab-item mui-active" href="#/">
+        <a :class="active('/')" href="#/">
             <span class="mui-icon mui-icon-home"></span>
             <span class="mui-tab-label">首页</span>
         </a>
-        <a class="mui-tab-item" href="#/Settings">
+        <a :class="active('/Settings')" href="#/Settings">
             <span class="mui-icon mui-icon-gear"></span>
             <span class="mui-tab-label">设置</span>
         </a>
@@ -12,6 +12,20 @@
 </template>
 <script>
 export default {
+  name: 'Footer',
+  methods: {
+    active: function (input) {
+      var path = this.$route.path
+      if (input === path) {
+        return 'mui-tab-item mui-active'
+      } else {
+        return 'mui-tab-item'
+      }
+    }
+  },
+  created: function () {
+    console.log(this.$route.path)
+  }
 }
 </script>
 <style scoped>

@@ -5,21 +5,27 @@
         <div class="mui-page-content">
             <div class="mui-scroll-wrapper">
                 <div class="mui-scroll">
-                    <ul class="mui-table-view mui-table-view-chevron">
-                        <li class="mui-table-view-cell mui-media">
-                            <a class="mui-navigate-right">
-                                <img class="mui-media-object mui-pull-left head-img" id="head-img" v-bind:src="userinfo.headimgurl">
-                                <div class="mui-media-body">
-                                    {{userinfo.nickname}}
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="mui-table-view mui-table-view-chevron">
-                        <li class="mui-table-view-cell">
-                            <a @click="goCompanyInfo" class="mui-navigate-right">公司信息</a>
-                        </li>
-                    </ul>
+                    <div class="mui-input-group">
+                        <div class="mui-input-row">
+                            <label>公司名称</label>
+                            <input type="text" v-model="Companyinfo.CompanyName" placeholder="点击输入公司名称" class="mui-input-clear mui-input">
+                        </div>
+                        <div class="mui-input-row">
+                            <label>联系人</label>
+                            <input type="text" v-model="Companyinfo.Contact" placeholder="点击输入联系人" class="mui-input-clear mui-input">
+                        </div>
+                        <div class="mui-input-row">
+                            <label>电话</label>
+                            <input type="text" v-model="Companyinfo.Tel" placeholder="点击输入电话" class="mui-input-clear mui-input">
+                        </div>
+                        <div class="mui-input-row">
+                            <label>地址</label>
+                            <input type="text" v-model="Companyinfo.Address" placeholder="点击输入地址" class="mui-input-clear mui-input">
+                        </div>
+                    </div>
+                    <div class="mui-content-padded">
+                        <button @click="onSubmit" class="btn btn-primary block">保存</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -28,47 +34,66 @@
     </div>
 </template>
 <script>
-import Header from './Header'
-import Footer from './Footer'
-import '../../static/css/mui.min.css'
-import '../../static/css/font-awesome.min.css'
-import '../../static/css/font-awesome.padding.css'
+import Header from '../Header'
+import Footer from '../Footer'
+import '../../../static/css/mui.min.css'
+import '../../../static/css/font-awesome.min.css'
+import '../../../static/css/font-awesome.padding.css'
 import axios from 'axios'
+import qs from 'qs'
 export default {
-  name: 'Settings',
+  name: 'CompanyInfo',
   components: {
     Header,
     Footer
   },
   data () {
     return {
-      userinfo: {
-        openid: '',
-        nickname: '',
-        sex: '',
-        headimgurl: ''
+      Companyinfo: {
+        Address: '',
+        CompanyName: '',
+        Contact: '',
+        Tel: ''
       }
     }
   },
   created () {
-    this.GLOBAL.HeaderText = '设置'
+    this.GLOBAL.HeaderText = '公司信息'
     this.loadData()
   },
   methods: {
     loadData: function () {
       var _this = this
-      axios.get('/handler/user/user/info', {})
+      axios.get('/handler/user/user/companyinfo', {})
         .then(function (res) {
-          _this.userinfo = res.data.data
+          if (res.data.data) {
+            _this.Companyinfo = res.data.data
+          }
         })
         .catch(function (error) {
           console.log(error)
         })
     },
-    goCompanyInfo () {
-      this.$router.push({
-        path: '/Pages/CompanyInfo',
-        query: {}
+    onSubmit: function () {
+      let _this = this
+      _this.$loading('正在提交')
+      axios.post('/handler/user/user/updatecompany', qs.stringify(this.Companyinfo)).then(res => {
+        if (res.data.code === 0) {
+          console.log('res:' + res)
+          _this.$toast.bottom('保存成功')
+        } else {
+          _this.$toast.bottom(res.data.msg)
+        }
+        _this.$loading.close()
+        console.log('res:' + res.data.code)
+        _this.$router.push({
+          path: '/Settings',
+          query: ''
+        })
+      }).catch(error => {
+        console.log('error:' + error)
+        _this.$loading.close()
+        _this.$toast.bottom('提交失败' + error)
       })
     }
   }
@@ -89,7 +114,7 @@ export default {
     position: absolute;
     left: 0;
     right: 0;
-    top: 44px;
+    top: 54px;
     bottom: 0;
     width: 100%;
     height: 100%;
@@ -235,5 +260,11 @@ export default {
 
 .mui-plus.mui-plus-stream .mui-stream-hidden{
     display: none !important;
+}
+.mui-input-row label{
+    text-align: right;
+}
+.mui-input-row input[type=text]{
+    color: #969696;
 }
 </style>

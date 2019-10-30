@@ -55,7 +55,7 @@ export default {
         _this.$loading.close()
         console.log('res:' + res.data.code)
         _this.$router.push({
-          path: '/JgdList',
+          path: '/Pages/JgdList',
           query: ''
         })
       }).catch(error => {

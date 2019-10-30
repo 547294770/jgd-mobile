@@ -1,6 +1,6 @@
 <template>
     <header id="app_header" class="mui-bar mui-bar-nav">
-        <a v-on:click="back" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <a v-if="showArraw()" v-on:click="back" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
         <h1 class="mui-title">{{title}}</h1>
     </header>
 </template>
@@ -19,6 +19,12 @@ export default {
   methods: {
     back: function () {
       this.$router.go(-1)
+    },
+    showArraw: function () {
+      if (this.title === '设置' || this.title === '首页') {
+        return false
+      }
+      return true
     },
     getuserinfo: function () {
       axios.get('/handler/user/user/init', {})
