@@ -216,7 +216,7 @@ export default {
         _this.$toast.bottom(res.data.msg)
         _this.$loading.close()
         _this.$router.push({
-          path: '/JgdList'
+          path: '/Pages/JgdList'
         })
       }).catch(function (error) {
         console.log(error)

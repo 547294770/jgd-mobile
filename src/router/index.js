@@ -7,6 +7,12 @@ import PagesJgdList from '@/components/pages/JgdList'
 import PagesJgdAdd from '@/components/pages/JgdAdd'
 import PagesJgdInfo from '@/components/pages/JgdInfo'
 import PagesCompanyInfo from '@/components/pages/CompanyInfo'
+import PagesShdInfo from '@/components/pages/ShdInfo'
+import PagesShdList from '@/components/pages/ShdList'
+import PagesThdInfo from '@/components/pages/ThdInfo'
+import PagesThdList from '@/components/pages/ThdList'
+import PagesFeeInfo from '@/components/pages/FeeInfo'
+import PagesFeeList from '@/components/pages/FeeList'
 
 import 'vue2-toast/lib/toast.css'
 import 'vuejs-dialog/dist/vuejs-dialog.min.css'
@@ -54,6 +60,36 @@ export default new Router({
       path: '/Pages/CompanyInfo',
       name: 'PagesCompanyInfo',
       component: PagesCompanyInfo
+    },
+    {
+      path: '/Pages/ShdInfo',
+      name: 'PagesShdInfo',
+      component: PagesShdInfo
+    },
+    {
+      path: '/Pages/ShdList',
+      name: 'PagesShdList',
+      component: PagesShdList
+    },
+    {
+      path: '/Pages/ThdInfo',
+      name: 'PagesThdInfo',
+      component: PagesThdInfo
+    },
+    {
+      path: '/Pages/ThdList',
+      name: 'PagesThdList',
+      component: PagesThdList
+    },
+    {
+      path: '/Pages/FeeInfo',
+      name: 'PagesFeeInfo',
+      component: PagesFeeInfo
+    },
+    {
+      path: '/Pages/FeeList',
+      name: 'PagesFeeList',
+      component: PagesFeeList
     }
   ]
 })

@@ -24,7 +24,7 @@ import '../../../static/css/font-awesome.padding.css'
 import axios from 'axios'
 import qs from 'qs'
 export default {
-  name: 'JgdAdd',
+  name: 'PagesJgdAdd',
   components: {
     Header,
     Footer

@@ -6,15 +6,15 @@
                     <span class="mui-icon fa fa-list ffa"><span class="mui-badge">3</span></span>
                     <div class="mui-media-body">需求单</div></a>
                 </li>
-                <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="delivery-list.html">
+                <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#/Pages/ShdList">
                     <span class="fa fa-truck ffa"></span>
                     <div class="mui-media-body">送货单</div></a>
                 </li>
-                <li v-on:click="click2" class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
+                <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#/Pages/ThdList">
                     <span class="fa fa-truck fa-flip-horizontal ffa"></span>
                     <div class="mui-media-body">提货单</div></a>
                 </li>
-                <li v-on:click="click1" class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
+                <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#/Pages/FeeList">
                     <span class="fa fa-rmb ffa"></span>
                     <div class="mui-media-body">加工费</div></a>
                 </li>
