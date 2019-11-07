@@ -10,7 +10,8 @@
                 <p><b>加工单号：</b><span>{{OrderNo}}</span></p>
                 <p><b>下单时间：</b><span>{{CreateAt}}</span></p>
                 <p><b>送货方式：</b><span>{{DelType}}</span></p>
-                <p><b>加工内容：</b><span>{{Content}}</span></p>
+                <p v-if="Content!==''"><b>加工内容：</b><span>{{Content}}</span></p>
+                <p v-if="Pic!==''"><b>上传截图：</b><a v-bind:href="Pic" target="_blank">{{Pic}}</a></p>
               </div>
             </div>
           </div>
@@ -72,7 +73,7 @@
                   </div>
                 </div>
                 <div v-if="Status=='NoticePickUp'">
-                  <div v-if="DelType=='Self'">
+                  <div v-if="PickType=='Self'">
                     <h5>提货日期：</h5><input type="date" v-model="PickUp.PickUpAt"  />
                     <h5>提货内容：</h5>
                     <div class="mui-input-row" style="margin: 10px 5px;">
@@ -89,8 +90,10 @@
           </div>
           <div class="mui-content-padded">
             <a v-if="Status=='None'" href="#" @click="saveOrder(ID)" class="btn btn-primary block">提交</a>
+            <a v-if="Status=='None'" v-bind:href='EditUrl+ID' class="btn btn-primary block mt10">修改</a>
+            <a v-if="Status=='None'" href="#" @click="deleteOrder(ID)" class="btn btn-danger block mt10">删除</a>
             <a v-if="Status=='Uploaded'" href="#" @click="saveOrder(ID)" class="btn btn-primary block">提交确认</a>
-            <a v-if="Status=='Print'" href="#" @click="saveOrder(ID)" class="btn btn-primary block">确认送货方式</a>
+            <a v-if="Status=='Print'" href="#" @click="saveOrder(ID)" class="btn btn-primary block">确认送材料方式</a>
             <a v-if="Status=='ConfirmDeliveryMethod'" href="#" @click="saveOrder(ID)" class="btn btn-primary block">提交送货资料</a>
             <a v-if="Status=='NoticePickUp'" href="#" @click="saveOrder(ID)" class="btn btn-primary block">提交提货资料</a>
             <a v-if="Status=='Produced'" href="#" @click="saveOrder(ID)" class="btn btn-primary block">填写提货单</a>
@@ -115,12 +118,15 @@ export default {
   },
   data () {
     return {
+      EditUrl: '#/Pages/JgdEdit?ID=',
       OrderID: '',
       OrderNo: '',
       CreateAt: '',
       Content: '',
+      Pic: '',
       Status: 0,
       DelType: 'None',
+      PickType: 'None',
       Attachment: [],
       Fee: [],
       Delivery: {
@@ -154,7 +160,7 @@ export default {
         for (const key in res.data.data) {
           if (res.data.data.hasOwnProperty(key)) {
             _this[key] = res.data.data[key]
-            console.log(res.data.data[key])
+            console.log(key + ':' + res.data.data[key])
           }
         }
         _this.$loading.close()
@@ -208,10 +214,29 @@ export default {
       axios.post('/handler/user/processingorder/exeorder', qs.stringify({
         OrderID: orderid,
         DelType: _this.DelType,
+        PickType: _this.PickType,
         AttachmentLength: _this.Attachment.length,
         Attachment: _this.Attachment,
         Delivery: _this.Delivery,
         PickUp: _this.PickUp
+      })).then(function (res) {
+        if (res.data.code === 0) {
+          _this.$router.push({
+            path: '/Pages/JgdList'
+          })
+        }
+        _this.$loading.close()
+        _this.$toast.bottom(res.data.msg)
+      }).catch(function (error) {
+        console.log(error)
+        _this.$loading.close()
+      })
+    },
+    deleteOrder (orderid) {
+      var _this = this
+      _this.$loading('正在提交')
+      axios.post('/handler/user/processingorder/delete', qs.stringify({
+        ID: orderid
       })).then(function (res) {
         _this.$toast.bottom(res.data.msg)
         _this.$loading.close()
@@ -248,6 +273,12 @@ export default {
         console.log(err)
         _this.$loading.close()
       })
+    },
+    goedit (id) {
+      this.$router.push({
+        path: '/Pages/JgdEdit',
+        query: { ID: id }
+      })
     }
   }
 }
@@ -256,10 +287,16 @@ export default {
 .mt60{
   margin-top: 60px
 }
+.mt10{
+  margin-top: 10px
+}
 .detail{
   padding: 10px 15px;
 }
 .mui-content-padded{
   margin-bottom: 60px;
+}
+.jgd-info-delete{
+  margin-top: 10px;
 }
 </style>

@@ -6,6 +6,7 @@ import Settings from '@/components/Settings'
 import PagesJgdList from '@/components/pages/JgdList'
 import PagesJgdAdd from '@/components/pages/JgdAdd'
 import PagesJgdInfo from '@/components/pages/JgdInfo'
+import PagesJgdEdit from '@/components/pages/JgdEdit'
 import PagesCompanyInfo from '@/components/pages/CompanyInfo'
 import PagesShdInfo from '@/components/pages/ShdInfo'
 import PagesShdList from '@/components/pages/ShdList'
@@ -50,6 +51,11 @@ export default new Router({
       path: '/Pages/JgdInfo',
       name: 'PagesJgdInfo',
       component: PagesJgdInfo
+    },
+    {
+      path: '/Pages/JgdEdit',
+      name: 'PagesJgdEdit',
+      component: PagesJgdEdit
     },
     {
       path: '/Settings',

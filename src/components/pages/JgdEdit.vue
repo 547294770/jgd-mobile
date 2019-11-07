@@ -42,14 +42,35 @@ export default {
       form: {
         Content: '',
         Pic: '',
+        ID: '',
         IsDraft: 0
       }
     }
   },
   created: function () {
-    this.GLOBAL.HeaderText = '提交加工单'
+    this.GLOBAL.HeaderText = '修改加工单'
+    this.loadData()
   },
   methods: {
+    loadData () {
+      let params = this.$route.query
+      var _this = this
+      _this.$loading('加载中')
+      axios.post('/handler/user/processingorder/info', qs.stringify({
+        OrderID: params.ID
+      })).then(function (res) {
+        for (const key in res.data.data) {
+          if (res.data.data.hasOwnProperty(key)) {
+            _this.form[key] = res.data.data[key]
+            // console.log("aa:" + res.data.data[key])
+          }
+        }
+        _this.$loading.close()
+      }).catch(function (error) {
+        console.log(error)
+        _this.$loading.close()
+      })
+    },
     onSubmit: function (draft) {
       let _this = this
       _this.$loading('正在提交')
