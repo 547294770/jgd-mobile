@@ -61,9 +61,20 @@
                     <input name="DelType" v-model="DelType" value="LXD" type="radio">
                   </div>
                 </div>
+                <div v-if="Status=='NoticePickUp'">
+                  <div class="mui-input-row mui-radio">
+                    <label>自提</label>
+                    <input name="DelType" v-model="PickType" value="Self" type="radio">
+                  </div>
+                  <div class="mui-input-row mui-radio">
+                    <label>利迅达送货</label>
+                    <input name="DelType" v-model="PickType" value="LXD" type="radio">
+                  </div>
+                </div>
                 <div v-if="Status=='ConfirmDeliveryMethod'">
                   <div v-if="DelType=='Self'">
                     <h5>送货日期：</h5><input type="date" v-model="Delivery.DeliveryAt"  />
+                    <h5>时间段：</h5><input type="text" placeholder="08:00:00-18:00:00" v-model="Delivery.TimeSection"  />
                     <h5>材料内容：</h5>
                     <div class="mui-input-row" style="margin: 10px 5px;">
                       <textarea id="textarea" v-model="Delivery.Content" rows="4" placeholder="填写材料内容说明。"></textarea>
@@ -74,9 +85,10 @@
                     </div>
                   </div>
                 </div>
-                <div v-if="Status=='NoticePickUp'">
+                <div v-if="Status=='ConfirmPickUpMethod'">
                   <div v-if="PickType=='Self'">
                     <h5>提货日期：</h5><input type="date" v-model="PickUp.PickUpAt"  />
+                    <h5>时间段：</h5><input type="text" placeholder="08:00:00-18:00:00" v-model="PickUp.TimeSection"  />
                     <h5>提货内容：</h5>
                     <div class="mui-input-row" style="margin: 10px 5px;">
                       <textarea id="textarea" v-model="PickUp.Content" rows="4" placeholder="填写提货内容说明。"></textarea>
@@ -95,9 +107,10 @@
             <a v-if="Status=='None'" v-bind:href='EditUrl+ID' class="btn btn-primary block mt10">修改</a>
             <a v-if="Status=='None'" href="#" @click="deleteOrder(ID)" class="btn btn-danger block mt10">删除</a>
             <a v-if="Status=='Uploaded'" href="#" @click="saveOrder(ID)" class="btn btn-primary block">提交确认</a>
-            <a v-if="Status=='Print'" href="#" @click="saveOrder(ID)" class="btn btn-primary block">确认送材料方式</a>
+            <a v-if="Status=='Print'" href="#" @click="saveOrder(ID)" class="btn btn-primary block">确认送货方式</a>
             <a v-if="Status=='ConfirmDeliveryMethod'" href="#" @click="saveOrder(ID)" class="btn btn-primary block">提交送货资料</a>
-            <a v-if="Status=='NoticePickUp'" href="#" @click="saveOrder(ID)" class="btn btn-primary block">提交提货资料</a>
+            <a v-if="Status=='NoticePickUp'" href="#" @click="saveOrder(ID)" class="btn btn-primary block">确认提货方式</a>
+            <a v-if="Status=='ConfirmPickUpMethod'" href="#" @click="saveOrder(ID)" class="btn btn-primary block">提交提货资料</a>
             <a v-if="Status=='Produced'" href="#" @click="saveOrder(ID)" class="btn btn-primary block">填写提货单</a>
             <a v-if="Status=='AlreadyGoods'" href="#" @click="saveOrder(ID)" class="btn btn-primary block">确认加工费</a>
             <a v-if="Status=='Shipped'" href="#" @click="saveOrder(ID)" class="btn btn-primary block">确认收货</a>

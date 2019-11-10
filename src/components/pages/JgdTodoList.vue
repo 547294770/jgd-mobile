@@ -14,7 +14,8 @@
                     <span v-if="item.Status=='Uploaded'" class="mui-badge mui-badge-primary">待确认加工内容</span>
                     <span v-if="item.Status=='Print'" class="mui-badge mui-badge-primary">待确认送货方式</span>
                     <span v-if="item.Status=='ConfirmDeliveryMethod'" class="mui-badge mui-badge-primary">待录入送货资料</span>
-                    <span v-if="item.Status=='NoticePickUp'" class="mui-badge mui-badge-primary">待提交提货信息</span>
+                    <span v-if="item.Status=='NoticePickUp'" class="mui-badge mui-badge-primary">待确认提货方式</span>
+                    <span v-if="item.Status=='ConfirmPickUpMethod'" class="mui-badge mui-badge-primary">待录入提货信息</span>
                     <span v-if="item.Status=='AlreadyGoods'" class="mui-badge mui-badge-primary">待确认加工费</span>
                     <span v-if="item.Status=='Shipped'" class="mui-badge mui-badge-primary">待确认收货</span>
                     单号：{{ item.OrderNo }}</a>
