@@ -9,7 +9,9 @@
               <div class="detail">
                 <p><b>加工单号：</b><span>{{OrderNo}}</span></p>
                 <p><b>下单时间：</b><span>{{CreateAt}}</span></p>
-                <p><b>送货方式：</b><span>{{DelType}}</span></p>
+                <p><b>订单状态：</b><span>{{StatusName}}</span></p>
+                <p><b>送货方式：</b><span>{{DelTypeName}}</span></p>
+                <p><b>提货方式：</b><span>{{PickTypeName}}</span></p>
                 <p v-if="Content!==''"><b>加工内容：</b><span>{{Content}}</span></p>
                 <p v-if="Pic!==''"><b>上传截图：</b><a v-bind:href="Pic" target="_blank">{{Pic}}</a></p>
               </div>
@@ -68,6 +70,9 @@
               </div>
             </div>
           </div>
+          <div class="mui-content-padded">
+            <a v-if="Status==='None'||Status==='Processing'" v-bind:href='EditUrl+ID' class="btn btn-primary block mt10">修改</a>
+          </div>
         <Footer></Footer>
     </div>
 </template>
@@ -79,19 +84,20 @@ import '../../../static/css/mui.min.css'
 import axios from 'axios'
 import qs from 'qs'
 export default {
-  name: 'JgdAdd',
+  name: 'JgdDetail',
   components: {
     Header,
     Footer
   },
   data () {
     return {
+      EditUrl: '#/Pages/JgdEdit?ID=',
       OrderID: '',
       OrderNo: '',
       CreateAt: '',
       Content: '',
       Pic: '',
-      Status: 0,
+      Status: 'None',
       DelType: 'None',
       PickType: 'None',
       AttachmentList: [],

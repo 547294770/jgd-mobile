@@ -9,7 +9,9 @@
               <div class="detail">
                 <p><b>加工单号：</b><span>{{OrderNo}}</span></p>
                 <p><b>下单时间：</b><span>{{CreateAt}}</span></p>
-                <p><b>送货方式：</b><span>{{DelType}}</span></p>
+                <p><b>订单状态：</b><span>{{StatusName}}</span></p>
+                <p><b>送货方式：</b><span>{{DelTypeName}}</span></p>
+                <p><b>提货方式：</b><span>{{PickTypeName}}</span></p>
                 <p v-if="Content!==''"><b>加工内容：</b><span>{{Content}}</span></p>
                 <p v-if="Pic!==''"><b>上传截图：</b><a v-bind:href="Pic" target="_blank">{{Pic}}</a></p>
               </div>
@@ -124,7 +126,7 @@ export default {
       CreateAt: '',
       Content: '',
       Pic: '',
-      Status: 0,
+      Status: 'None',
       DelType: 'None',
       PickType: 'None',
       Attachment: [],
@@ -149,9 +151,10 @@ export default {
     this.loadattachment()
     this.loadfee()
   },
+  inject: ['reload'],
   methods: {
     initPageData: function () {
-      let params = this.$route.params
+      let params = this.$route.query
       var _this = this
       _this.$loading('加载中')
       axios.post('/handler/user/processingorder/info', qs.stringify({
@@ -170,7 +173,7 @@ export default {
       })
     },
     loadattachment () {
-      let params = this.$route.params
+      let params = this.$route.query
       var _this = this
       axios.post('/handler/user/processingorder/attachment', qs.stringify({
         OrderID: params.ID
@@ -193,7 +196,7 @@ export default {
       })
     },
     loadfee () {
-      let params = this.$route.params
+      let params = this.$route.query
       var _this = this
       axios.post('/handler/user/processingorder/fee', qs.stringify({
         OrderID: params.ID
@@ -221,9 +224,18 @@ export default {
         PickUp: _this.PickUp
       })).then(function (res) {
         if (res.data.code === 0) {
-          _this.$router.push({
-            path: '/Pages/JgdList'
-          })
+          if (res.data.data.Status === 'Print' || (res.data.data.Status === 'ConfirmDeliveryMethod' && res.data.data.DelType === 'Self')) {
+            // path = '/Pages/JgdInfo'
+            // query = { ID: _this.ID }
+            _this.reload()
+            console.log('res.data.data.Status======' + res.data.data.Status)
+            console.log('_this.reload======' + _this.reload)
+          } else {
+            _this.$router.push({
+              path: '/Pages/JgdTodoList',
+              query: {}
+            })
+          }
         }
         _this.$loading.close()
         _this.$toast.bottom(res.data.msg)

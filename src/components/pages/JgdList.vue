@@ -5,7 +5,9 @@
             <div class="mui-card mui-content-padded" id="container-jgd-list">
               <ul class="mui-table-view">
                 <li v-for="(item,index) in items" @click="jgdDetail(item)" class="mui-table-view-cell" :key="index">
-                  <a class="mui-navigate-right" href="javascript:;">单号：{{ item.OrderNo }}</a>
+                  <a class="mui-navigate-right" href="javascript:;">单号：{{ item.OrderNo }}
+                    <span class="mui-badge mui-badge-primary">{{item.StatusName}}</span>
+                  </a>
                 </li>
               </ul>
             </div>

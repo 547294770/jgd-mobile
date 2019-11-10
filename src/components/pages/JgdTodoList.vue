@@ -84,9 +84,13 @@ export default {
     },
     jgdInfo (item) {
       // console.log('item:' + item.OrderNo)
+      // this.$router.push({
+      //   name: 'PagesJgdInfo',
+      //   params: item
+      // })
       this.$router.push({
-        name: 'PagesJgdInfo',
-        params: item
+        path: '/Pages/JgdInfo',
+        query: { ID: item.ID }
       })
     }
   }

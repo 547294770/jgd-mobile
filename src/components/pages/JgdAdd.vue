@@ -61,7 +61,7 @@ export default {
           _this.form.Content = ''
           _this.form.Pic = ''
           _this.$router.push({
-            path: '/Pages/JgdList',
+            path: '/Pages/JgdTodoList',
             query: ''
           })
         } else {
