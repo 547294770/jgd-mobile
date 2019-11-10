@@ -2,9 +2,9 @@
     <div id="app_body" class="mui-content">
         <div id="tabbar" class="mui-control-content mui-active">
             <ul class="mui-table-view mui-grid-view mui-grid-9">
-                <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#/Pages/JgdList">
+                <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#/Pages/JgdTodoList">
                     <span class="mui-icon fa fa-list ffa"><span class="mui-badge">3</span></span>
-                    <div class="mui-media-body">需求单</div></a>
+                    <div class="mui-media-body">待办</div></a>
                 </li>
                 <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#/Pages/ShdList">
                     <span class="fa fa-truck ffa"></span>
@@ -17,6 +17,10 @@
                 <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#/Pages/FeeList">
                     <span class="fa fa-rmb ffa"></span>
                     <div class="mui-media-body">加工费</div></a>
+                </li>
+                <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#/Pages/JgdList">
+                    <span class="fa fa-list-ul ffa"></span>
+                    <div class="mui-media-body">加工单</div></a>
                 </li>
             </ul>
         </div>

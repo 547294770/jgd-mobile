@@ -4,8 +4,10 @@ import HelloWorld from '@/components/HelloWorld'
 import Home from '@/components/Home'
 import Settings from '@/components/Settings'
 import PagesJgdList from '@/components/pages/JgdList'
+import PagesJgdTodoList from '@/components/pages/JgdTodoList'
 import PagesJgdAdd from '@/components/pages/JgdAdd'
 import PagesJgdInfo from '@/components/pages/JgdInfo'
+import PagesJgdDetail from '@/components/pages/JgdDetail'
 import PagesJgdEdit from '@/components/pages/JgdEdit'
 import PagesCompanyInfo from '@/components/pages/CompanyInfo'
 import PagesShdInfo from '@/components/pages/ShdInfo'
@@ -43,6 +45,11 @@ export default new Router({
       component: PagesJgdList
     },
     {
+      path: '/Pages/JgdTodoList',
+      name: 'PagesJgdTodoList',
+      component: PagesJgdTodoList
+    },
+    {
       path: '/Pages/JgdAdd',
       name: 'PagesJgdAdd',
       component: PagesJgdAdd
@@ -51,6 +58,11 @@ export default new Router({
       path: '/Pages/JgdInfo',
       name: 'PagesJgdInfo',
       component: PagesJgdInfo
+    },
+    {
+      path: '/Pages/JgdDetail',
+      name: 'PagesJgdDetail',
+      component: PagesJgdDetail
     },
     {
       path: '/Pages/JgdEdit',

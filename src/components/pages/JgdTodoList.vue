@@ -2,10 +2,22 @@
     <div>
         <Header></Header>
         <div class="mui-content">
-            <div class="mui-card mui-content-padded" id="container-jgd-list">
+            <div class="mui-content-padded">
+              <a class="btn btn-primary block" @click="jgdadd">
+  <i class="fa fa-edit fa-lg"></i> 填写加工单</a>
+            </div>
+            <div class="mui-card" id="container-jgd-list">
               <ul class="mui-table-view">
-                <li v-for="(item,index) in items" @click="jgdDetail(item)" class="mui-table-view-cell" :key="index">
-                  <a class="mui-navigate-right" href="javascript:;">单号：{{ item.OrderNo }}</a>
+                <li v-for="(item,index) in items" @click="jgdInfo(item)" class="mui-table-view-cell" :key="index">
+                  <a class="mui-navigate-right" href="javascript:;">
+                    <span v-if="item.Status=='None'" class="mui-badge mui-badge-primary">草稿</span>
+                    <span v-if="item.Status=='Uploaded'" class="mui-badge mui-badge-primary">待确认加工内容</span>
+                    <span v-if="item.Status=='Print'" class="mui-badge mui-badge-primary">待确认送货方式</span>
+                    <span v-if="item.Status=='ConfirmDeliveryMethod'" class="mui-badge mui-badge-primary">待录入送货资料</span>
+                    <span v-if="item.Status=='NoticePickUp'" class="mui-badge mui-badge-primary">待提交提货信息</span>
+                    <span v-if="item.Status=='AlreadyGoods'" class="mui-badge mui-badge-primary">待确认加工费</span>
+                    <span v-if="item.Status=='Shipped'" class="mui-badge mui-badge-primary">待确认收货</span>
+                    单号：{{ item.OrderNo }}</a>
                 </li>
               </ul>
             </div>
@@ -45,14 +57,14 @@ export default {
     return { items: [] }
   },
   created: function () {
-    this.GLOBAL.HeaderText = '加工单列表'
+    this.GLOBAL.HeaderText = '加工单待办列表'
     this.loadData()
   },
   methods: {
     loadData: function () {
       var _this = this
       _this.$loading('加载中...')
-      axios.get('/handler/user/processingorder/list', {})
+      axios.get('/handler/user/processingorder/todolist', {})
         .then(function (res) {
           console.log(res)
           console.log(_this)
@@ -64,10 +76,16 @@ export default {
           _this.$loading.close()
         })
     },
-    jgdDetail (item) {
+    jgdadd () {
+      this.$router.push({
+        path: '/Pages/JgdAdd',
+        query: {}
+      })
+    },
+    jgdInfo (item) {
       // console.log('item:' + item.OrderNo)
       this.$router.push({
-        name: 'PagesJgdDetail',
+        name: 'PagesJgdInfo',
         params: item
       })
     }
