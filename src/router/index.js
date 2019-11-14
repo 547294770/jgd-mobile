@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import VueScroller from 'vue-scroller'
 import HelloWorld from '@/components/HelloWorld'
 import Home from '@/components/Home'
 import Settings from '@/components/Settings'
@@ -24,6 +25,7 @@ import Toast from 'vue2-toast'
 import VuejsDialog from 'vuejs-dialog'
 
 Vue.use(Router)
+Vue.use(VueScroller)
 Vue.use(Toast)
 Vue.use(VuejsDialog)
 

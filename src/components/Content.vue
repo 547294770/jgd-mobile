@@ -3,7 +3,7 @@
         <div id="tabbar" class="mui-control-content mui-active">
             <ul class="mui-table-view mui-grid-view mui-grid-9">
                 <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#/Pages/JgdTodoList">
-                    <span class="mui-icon fa fa-list ffa"><span class="mui-badge">3</span></span>
+                    <span class="mui-icon fa fa-list ffa"><span class="mui-badge">{{ProcessingOrderCount}}</span></span>
                     <div class="mui-media-body">待办</div></a>
                 </li>
                 <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#/Pages/ShdList">
@@ -54,8 +54,28 @@
     </div>
 </template>
 <script>
+import axios from 'axios'
 export default {
+  name: 'Content',
+  data () {
+    return {
+      ProcessingOrderCount: 0
+    }
+  },
+  created: function () {
+    this.loadData()
+  },
   methods: {
+    loadData: function () {
+      let _this = this
+      axios.get('/handler/user/processingorder/todocount', {}).then(function (res) {
+        for (const key in _this) {
+          if (res.data.data.hasOwnProperty(key)) {
+            _this[key] = res.data.data[key]
+          }
+        }
+      })
+    },
     click1: function () {
       this.$toast.center('center')
       this.$loading('加载中...')

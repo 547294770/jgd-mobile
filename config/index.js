@@ -11,10 +11,10 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/handler': {
+      '/': {
         target: 'http://localhost:8889',
         changeOrigin: true,
-        pathRewrite: {'^/handler': '/handler'}
+        // pathRewrite: {'^/handler': '/handler'}
       }
     },
 
@@ -29,7 +29,7 @@ module.exports = {
     // Use Eslint Loader?
     // If true, your code will be linted during bundling and
     // linting errors and warnings will be shown in the console.
-    useEslint: true,
+    useEslint: false,
     // If true, eslint errors and warnings will also be shown in the error overlay
     // in the browser.
     showEslintErrorsInOverlay: false,

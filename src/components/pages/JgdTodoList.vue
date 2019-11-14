@@ -1,11 +1,8 @@
 <template>
     <div>
-        <Header></Header>
+        <Header ref="header"></Header>
         <div class="mui-content">
-            <div class="mui-content-padded">
-              <a class="btn btn-primary block" @click="jgdadd">
-  <i class="fa fa-edit fa-lg"></i> 填写加工单</a>
-            </div>
+          <scroller :on-refresh='refresh' :on-infinite='infinite' ref="todolistScroller" class="padding">
             <div class="mui-card" id="container-jgd-list">
               <ul class="mui-table-view">
                 <li v-for="(item,index) in items" @click="jgdInfo(item)" class="mui-table-view-cell" :key="index">
@@ -22,20 +19,7 @@
                 </li>
               </ul>
             </div>
-            <div class="mui-content-padded">
-                <ul class="mui-pager">
-                    <li>
-                        <a href="#">
-                            上一页
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            下一页
-                        </a>
-                    </li>
-                </ul>
-            </div>
+          </scroller>
         </div>
         <Footer></Footer>
     </div>
@@ -55,33 +39,67 @@ export default {
     Footer
   },
   data () {
-    return { items: [] }
+    return {  
+      noData: false,
+      items: [],
+      pageIndex: 0,
+      pageSize: 20 
+    }
   },
   created: function () {
     this.GLOBAL.HeaderText = '加工单待办列表'
-    this.loadData()
   },
-  methods: {
-    loadData: function () {
-      var _this = this
-      _this.$loading('加载中...')
-      axios.get('/handler/user/processingorder/todolist', {})
-        .then(function (res) {
-          console.log(res)
-          console.log(_this)
-          _this.items = res.data.data
-          _this.$loading.close()
-        })
-        .catch(function (error) {
-          console.log(error)
-          _this.$loading.close()
-        })
-    },
-    jgdadd () {
+  mounted: function () {
+    console.log('mounted....')
+    // this.loadData()
+    this.$refs.header.setRightButtonCss('fa fa-edit fa-lg')
+    this.$refs.header.setRightButtonClick(function () {
       this.$router.push({
         path: '/Pages/JgdAdd',
         query: {}
       })
+    })
+    // console.log('rightbuttoncss...:'+this.$$refs.rightbuttoncss)
+  },
+  methods: {
+    loadData: function (done) {
+      var _this = this
+      axios.post('/handler/user/processingorder/todolist', `page=${_this.pageIndex}&size=${_this.pageSize}`)
+        .then(function (res) {
+          if (res.data.code === 0) {
+            _this.noData = res.data.data.lastPage
+            if (_this.pageIndex <= 1) {
+              _this.items = res.data.data.data
+            } else {
+              _this.items = _this.items.concat(res.data.data.data)
+            }
+          }
+          if (done) {
+            if (_this.noData && done.name == 'bound finishInfinite') {
+              done(_this.noData)
+            } else {
+              done()
+            }
+          }
+        })
+        .catch(function (error) {
+          if (done) {
+            done()
+          }
+          console.log(error)
+        })
+    },
+    refresh (done) {
+      this.pageIndex = 1
+      setTimeout(() => {
+        this.loadData(done)
+      }, 1500)
+    },
+    infinite (done) {
+      this.pageIndex++
+      setTimeout(() => {
+        this.loadData(done)
+      }, 1500)
     },
     jgdInfo (item) {
       // console.log('item:' + item.OrderNo)
@@ -98,5 +116,8 @@ export default {
 }
 </script>
 <style scoped>
-
+  .padding {
+    padding-top:40px;
+    padding-bottom: 0px;
+  }
 </style>
