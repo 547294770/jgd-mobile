@@ -10,20 +10,6 @@
                 </li>
               </ul>
             </div>
-            <div class="mui-content-padded">
-                <ul class="mui-pager">
-                    <li>
-                        <a href="#">
-                            上一页
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            下一页
-                        </a>
-                    </li>
-                </ul>
-            </div>
         </div>
         <Footer></Footer>
     </div>
@@ -37,7 +23,7 @@ import '../../../static/css/font-awesome.min.css'
 import '../../../static/css/font-awesome.padding.css'
 import axios from 'axios'
 export default {
-  name: 'JgdList',
+  name: 'FeeList',
   components: {
     Header,
     Footer
@@ -68,8 +54,8 @@ export default {
     info (item) {
       // console.log('item:' + item.OrderNo)
       this.$router.push({
-        name: 'PagesFeeInfo',
-        params: item
+        path: '/Pages/FeeInfo',
+        query: {ID:item.ID}
       })
     }
   }

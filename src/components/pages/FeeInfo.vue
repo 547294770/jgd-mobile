@@ -45,10 +45,10 @@ export default {
   },
   methods: {
     initPageData: function () {
-      let params = this.$route.params
+      let params = this.$route.query
       var _this = this
       _this.$loading('加载中')
-      axios.post('/handler/user/rocessingfee/info', qs.stringify({
+      axios.post('/handler/user/processingfee/info', qs.stringify({
         ID: params.ID
       })).then(function (res) {
         for (const key in res.data.data) {

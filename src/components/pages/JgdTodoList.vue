@@ -33,7 +33,7 @@ import '../../../static/css/font-awesome.min.css'
 import '../../../static/css/font-awesome.padding.css'
 import axios from 'axios'
 export default {
-  name: 'JgdList',
+  name: 'JgdTodoList',
   components: {
     Header,
     Footer

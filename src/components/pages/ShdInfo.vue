@@ -25,7 +25,7 @@ import '../../../static/css/mui.min.css'
 import axios from 'axios'
 import qs from 'qs'
 export default {
-  name: 'JgdAdd',
+  name: 'ShdInfo',
   components: {
     Header,
     Footer
@@ -47,7 +47,7 @@ export default {
   },
   methods: {
     initPageData: function () {
-      let params = this.$route.params
+      let params = this.$route.query
       var _this = this
       _this.$loading('加载中')
       axios.post('/handler/user/deliveryorder/info', qs.stringify({

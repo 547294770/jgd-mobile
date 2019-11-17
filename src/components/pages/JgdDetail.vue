@@ -22,13 +22,7 @@
             <div class="mui-card-header">附件信息</div>
             <!--内容区-->
             <div class="mui-card-content">
-              <div class="detail">
-                <ul>
-                  <li v-for="(item,index) in AttachmentList" :key="index">
-                    <a v-bind:href="item.FilePath" target="_blank">{{index}}.{{item.Name}}</a>
-                  </li>
-                </ul>
-              </div>
+              <vue-preview :slides="Attachment" @click="closeHandle"></vue-preview>
             </div>
           </div>
           <div v-if="DeliveryList.length > 0" class="mui-card">
@@ -70,7 +64,7 @@
               </div>
             </div>
           </div>
-          <div class="mui-content-padded">
+          <div v-if="IsSelf" class="mui-content-padded">
             <a v-if="Status==='None'||Status==='Processing'" v-bind:href='EditUrl+ID' class="btn btn-primary block mt10">修改</a>
           </div>
         <Footer></Footer>
@@ -96,11 +90,16 @@ export default {
       OrderNo: '',
       CreateAt: '',
       Content: '',
+      Attachment: [],
+      AttachmentList: [],
+      IsSelf: false,
       Pic: '',
-      Status: 'None',
+      StatusName: '未指定',
+      DelTypeName: '未指定',
+      PickTypeName: '未指定',
+      ID: '',
       DelType: 'None',
       PickType: 'None',
-      AttachmentList: [],
       FeeList: [],
       DeliveryList: [],
       PickUpList: []
@@ -114,7 +113,7 @@ export default {
   },
   methods: {
     initPageData: function () {
-      let params = this.$route.params
+      let params = this.$route.query
       var _this = this
       _this.$loading('加载中')
       axios.post('/handler/user/processingorder/info', qs.stringify({
@@ -126,6 +125,15 @@ export default {
             console.log(key + ':' + res.data.data[key])
           }
         }
+        _this.Attachment = []
+        _this.AttachmentList.forEach(p=>{
+          _this.Attachment.push({
+            src: p.FilePath,
+            msrc: p.FilePath,
+            w: 600,
+            h: 400
+          })
+        })
         _this.$loading.close()
       }).catch(function (error) {
         console.log(error)
@@ -135,15 +143,15 @@ export default {
     goshdinfo (item) {
       // console.log('item:' + item.OrderNo)
       this.$router.push({
-        name: 'PagesShdInfo',
-        params: item
+        path: '/Pages/ShdInfo',
+        query: { ID: item.ID }
       })
     },
     gothdinfo (item) {
       // console.log('item:' + item.OrderNo)
       this.$router.push({
-        name: 'PagesThdInfo',
-        params: item
+        path: '/Pages/ThdInfo',
+        query: { ID: item.ID }
       })
     }
   }
