@@ -12,6 +12,7 @@ import Footer from './Footer'
 import '../../static/css/mui.min.css'
 import '../../static/css/font-awesome.min.css'
 import '../../static/css/font-awesome.padding.css'
+import '../../static/css/jgd.css'
 
 export default {
   name: 'Home',

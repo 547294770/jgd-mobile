@@ -1,94 +1,28 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li>
-        <a
-          href="https://vuejs.org"
-          target="_blank"
-        >
-          Core Docs
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://forum.vuejs.org"
-          target="_blank"
-        >
-          Forum
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://chat.vuejs.org"
-          target="_blank"
-        >
-          Community Chat
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://twitter.com/vuejs"
-          target="_blank"
-        >
-          Twitter
-        </a>
-      </li>
-      <br>
-      <li>
-        <a
-          href="http://vuejs-templates.github.io/webpack/"
-          target="_blank"
-        >
-          Docs for This Template
-        </a>
-      </li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li>
-        <a
-          href="http://router.vuejs.org/"
-          target="_blank"
-        >
-          vue-router
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vuex.vuejs.org/"
-          target="_blank"
-        >
-          vuex
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vue-loader.vuejs.org/"
-          target="_blank"
-        >
-          vue-loader
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/awesome-vue"
-          target="_blank"
-        >
-          awesome-vue
-        </a>
-      </li>
-    </ul>
-  </div>
+  <vue-preview :slides="list" @click="closeHandle"></vue-preview>
 </template>
-
 <script>
 export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      list: [{
+　　　　　　　　 src: 'https://farm6.staticflickr.com/5591/15008867125_68a8ed88cc_b.jpg',
+　　　　　　　　 msrc: 'https://farm6.staticflickr.com/5591/15008867125_68a8ed88cc_m.jpg',
+　　　　　　　　 w: 600,
+　　　　　　　　 h: 400
+  　　　　　　},
+  　　　　　　 {
+              src: 'https://farm4.staticflickr.com/3902/14985871946_86abb8c56f_b.jpg', 
+              msrc: 'https://farm4.staticflickr.com/3902/14985871946_86abb8c56f_m.jpg',
+              w: 1200,
+              h: 900
+  　　　　　　}]
+    }
+  },
+  methods: {
+    closeHandle: function () {
+      console.log('999999999999999....')
     }
   }
 }
@@ -96,18 +30,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+　.my-gallery:after{content:"";display:block;visibility: hidden;clear:both;height:0}
+　.my-gallery figure{width:100px;height:100px;float:left;margin:.100px;padding:0;box-shadow:0 0 .100px #ccc;}
 </style>

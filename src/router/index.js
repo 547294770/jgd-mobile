@@ -23,11 +23,13 @@ import 'vuejs-dialog/dist/vuejs-dialog.min.css'
 
 import Toast from 'vue2-toast'
 import VuejsDialog from 'vuejs-dialog'
+import VuePreview from 'vue-preview'
 
 Vue.use(Router)
 Vue.use(VueScroller)
 Vue.use(Toast)
 Vue.use(VuejsDialog)
+Vue.use(VuePreview)
 
 export default new Router({
   routes: [

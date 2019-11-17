@@ -17,24 +17,20 @@
               </div>
             </div>
           </div>
-          <div v-if="Attachment.length > 0" class="mui-card">
+          <div v-if="AttachmentList.length > 0" class="mui-card">
             <!--页眉，放置标题-->
             <div class="mui-card-header">附件信息</div>
             <!--内容区-->
             <div class="mui-card-content">
+              <vue-preview :slides="Attachment" @click="closeHandle"></vue-preview>
               <div class="detail">
-                <ul>
-                  <li v-for="(item,index) in Attachment" :key="index">
-                    <a v-bind:href="item.FilePath" target="_blank">{{index}}.{{item.Name}}</a>
-                  </li>
-                </ul>
                 <div v-if="Status=='Uploaded'">
                   <input type="file" ref="fileInt"><button @click="changeHandle">上传</button>
                 </div>
               </div>
             </div>
           </div>
-          <div v-if="Fee.length > 0" class="mui-card">
+          <div v-if="FeeList.length > 0" class="mui-card">
             <!--页眉，放置标题-->
             <div class="mui-card-header">加工费</div>
             <!--内容区-->
@@ -140,10 +136,15 @@ export default {
       Content: '',
       Pic: '',
       Status: 'None',
+      StatusName: '未指定',
+      DelTypeName: '未指定',
+      PickTypeName: '未指定',
+      ID: '',
       DelType: 'None',
       PickType: 'None',
       Attachment: [],
-      Fee: [],
+      AttachmentList: [],
+      FeeList: [],
       Delivery: {
         Content: '',
         VehicleInfo: '',
@@ -161,8 +162,6 @@ export default {
   created: function () {
     this.GLOBAL.HeaderText = '加工单明细'
     this.initPageData()
-    this.loadattachment()
-    this.loadfee()
   },
   inject: ['reload'],
   methods: {
@@ -179,45 +178,15 @@ export default {
             console.log(key + ':' + res.data.data[key])
           }
         }
-        _this.$loading.close()
-      }).catch(function (error) {
-        console.log(error)
-        _this.$loading.close()
-      })
-    },
-    loadattachment () {
-      let params = this.$route.query
-      var _this = this
-      axios.post('/handler/user/processingorder/attachment', qs.stringify({
-        OrderID: params.ID
-      })).then(function (res) {
         _this.Attachment = []
-        for (var index = 0; index < res.data.data.length; index++) {
-          _this.Attachment[index] = res.data.data[index]
-        }
-        console.log('_this.Attachment.length :' + _this.Attachment.length)
-        // for (const key in res.data.data) {
-        //   if (res.data.data.hasOwnProperty(key)) {
-        //     _this.Attachment[key] = res.data.data[key]
-        //     console.log(res.data.data[key])
-        //   }
-        // }
-        _this.$loading.close()
-      }).catch(function (error) {
-        console.log(error)
-        _this.$loading.close()
-      })
-    },
-    loadfee () {
-      let params = this.$route.query
-      var _this = this
-      axios.post('/handler/user/processingorder/fee', qs.stringify({
-        OrderID: params.ID
-      })).then(function (res) {
-        _this.Fee = []
-        for (var index = 0; index < res.data.data.length; index++) {
-          _this.Fee[index] = res.data.data[index]
-        }
+        _this.AttachmentList.forEach(p=>{
+          _this.Attachment.push({
+            src: p.FilePath,
+            msrc: p.FilePath,
+            w: 600,
+            h: 400
+          })
+        })
         _this.$loading.close()
       }).catch(function (error) {
         console.log(error)
@@ -231,8 +200,8 @@ export default {
         OrderID: orderid,
         DelType: _this.DelType,
         PickType: _this.PickType,
-        AttachmentLength: _this.Attachment.length,
-        Attachment: _this.Attachment,
+        AttachmentLength: _this.AttachmentList.length,
+        Attachment: _this.AttachmentList,
         Delivery: _this.Delivery,
         PickUp: _this.PickUp
       })).then(function (res) {
@@ -286,18 +255,27 @@ export default {
         }
       }).then(res => {
         console.log(res)
-        _this.Attachment.push({
+        _this.AttachmentList.push({
           SourceID: _this.OrderID,
           FileSize: res.data.data.size,
           FilePath: res.data.data.src,
           FileName: res.data.data.file,
           Name: res.data.data.name})
+        _this.Attachment.push({
+          src: res.data.data.src,
+          msrc: res.data.data.src,
+          w: 600,
+          h: 400
+        })
         _this.$toast.bottom(res.data.msg)
         _this.$loading.close()
       }).catch(err => {
         console.log(err)
         _this.$loading.close()
       })
+    },
+    closeHandle: function () {
+      console.log('999999999999999....')
     },
     goedit (id) {
       this.$router.push({
