@@ -81,15 +81,15 @@ export default {
         if (res.data.code === 0) {
           console.log('res:' + res)
           _this.$toast.bottom('保存成功')
+          _this.$router.push({
+            path: '/Settings',
+            query: ''
+          })
         } else {
           _this.$toast.bottom(res.data.msg)
         }
         _this.$loading.close()
         console.log('res:' + res.data.code)
-        _this.$router.push({
-          path: '/Settings',
-          query: ''
-        })
       }).catch(error => {
         console.log('error:' + error)
         _this.$loading.close()
