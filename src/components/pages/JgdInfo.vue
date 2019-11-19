@@ -30,15 +30,48 @@
               </div>
             </div>
           </div>
+          <div v-if="DeliveryList.length > 0" class="mui-card">
+            <!--页眉，放置标题-->
+            <div class="mui-card-header">送材料信息</div>
+            <!--内容区-->
+            <div class="mui-card-content">
+              <div class="detail">
+                <div v-for="(item,index) in DeliveryList" :key="index">
+                  <div>送货类型：{{item.TypeName}}</div>
+                  <div>送货日期：{{item.DeliveryAt}}</div>
+                  <div>时 间 段：{{item.TimeSection}}</div>
+                  <div>材料内容：{{item.Content}}</div>
+                  <div>车辆信息：{{item.VehicleInfo}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div v-if="PickUpList.length > 0" class="mui-card">
+            <!--页眉，放置标题-->
+            <div class="mui-card-header">提货信息</div>
+            <!--内容区-->
+            <div class="mui-card-content">
+              <div class="detail">
+                <div v-for="(item,index) in PickUpList" :key="index">
+                  <div>提货类型：{{item.TypeName}}</div>
+                  <div>提货日期：{{item.PickUpAt}}</div>
+                  <div>时 间 段：{{item.TimeSection}}</div>
+                  <div>提货内容：{{item.Content}}</div>
+                  <div>车辆信息：{{item.VehicleInfo}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
           <div v-if="FeeList.length > 0" class="mui-card">
             <!--页眉，放置标题-->
             <div class="mui-card-header">加工费</div>
             <!--内容区-->
             <div class="mui-card-content">
               <div class="detail">
-                <div v-for="(item,index) in Fee" :key="index">
-                  <div>{{item.TypeName}}</div>
-                  <div>{{item.Content}}</div>
+                <div v-for="(item,index) in FeeList" :key="index">
+                  <div>单号：{{item.FeeNo}}</div>
+                  <div>类型：{{item.TypeName}}</div>
+                  <div>明细：{{item.Content}}</div>
                 </div>
               </div>
             </div>
@@ -145,6 +178,8 @@ export default {
       Attachment: [],
       AttachmentList: [],
       FeeList: [],
+      DeliveryList: [],
+      PickUpList: [],
       Delivery: {
         Content: '',
         VehicleInfo: '',
