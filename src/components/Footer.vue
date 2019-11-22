@@ -4,6 +4,10 @@
             <span class="mui-icon mui-icon-home"></span>
             <span class="mui-tab-label">首页</span>
         </a>
+        <a class="mui-tab-item mui-active" href="#/Pages/JgdAdd">
+            <span class="fa fa-edit fa-lg mui-icon"></span>
+            <span class="mui-tab-label">发布</span>
+        </a>
         <a :class="active('/Settings')" href="#/Settings">
             <span class="mui-icon mui-icon-gear"></span>
             <span class="mui-tab-label">设置</span>

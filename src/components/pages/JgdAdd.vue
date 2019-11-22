@@ -8,13 +8,14 @@
               <textarea v-model="form.Content" rows="5" placeholder="填写加工要求，规格说明。"></textarea>
             </div>
             <div><h5>图片：</h5></div>
-            <div class="mui-input-row">
-              <a v-bind:href="form.Pic" target="_blank">{{form.Pic}}</a>
-              <input type="file" ref="fileInt"><button @click="changeHandle">上传</button>
+            <div><a v-bind:href="form.Pic" target="_blank">{{form.Pic}}</a></div>
+            <div class="mui-input-row upload-area">
+              <div class="file"><input type="file" ref="fileInt"></div>
+              <div class="button"><button @click="changeHandle">上传</button></div>
             </div>
-            <div class="mui-content-padded">
-              <button @click="onSubmit(true)" class="btn btn-primary block">保存为草稿</button>
-              <button @click="onSubmit(false)" class="btn btn-primary block">提交</button>
+            <div class="mui-content-padded upload-area">
+              <div class="save"><button @click="onSubmit(true)" class="btn btn-primary">保存为草稿</button></div>
+              <div class="submit"><button @click="onSubmit(false)" class="btn btn-primary">提交</button></div>
             </div>
           </div>
         </div>
@@ -51,6 +52,9 @@ export default {
   },
   methods: {
     onSubmit: function (draft) {
+      if(this.form.Pic === '' && !confirm('未上传图片，确认要保存吗？')){
+        return false;
+      }
       let _this = this
       _this.$loading('正在提交')
       this.form.IsDraft = draft ? 1 : 0
@@ -77,8 +81,12 @@ export default {
     },
     changeHandle () {
       var _this = this
-      _this.$loading('正在上传')
       const file = this.$refs.fileInt.files[0]
+      if(!file) {
+        _this.$toast.bottom('请选择图片')
+        return;
+      }
+      _this.$loading('正在上传')
       console.log(file)
       const data = new FormData()
       data.append('file', file)
@@ -88,6 +96,7 @@ export default {
         }
       }).then(res => {
         console.log(res)
+        _this.$refs.fileInt.value = null
         _this.form.Pic = res.data.data.src
         _this.$toast.bottom(res.data.msg)
         _this.$loading.close()
@@ -100,5 +109,29 @@ export default {
 }
 </script>
 <style scoped>
-
+.upload-area{
+  display: -webkit-flex;
+  display: flex;
+  align-items:flex-start;
+  flex-direction: row;
+  box-sizing: border-box;
+}
+.upload-area > div.file{
+  width: 80%;
+}
+.upload-area > div.button{
+  width: 20%;
+}
+.upload-area > div.save{
+  width: 100%;
+}
+.upload-area > div.save button{
+  width: 100%;
+}
+.upload-area > div.submit{
+  width: 100%;
+}
+.upload-area > div.submit button{
+  width: 100%;
+}
 </style>

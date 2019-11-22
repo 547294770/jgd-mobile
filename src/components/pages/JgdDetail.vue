@@ -13,7 +13,9 @@
                 <p><b>送货方式：</b><span>{{DelTypeName}}</span></p>
                 <p><b>提货方式：</b><span>{{PickTypeName}}</span></p>
                 <p v-if="Content!==''"><b>加工内容：</b><span>{{Content}}</span></p>
-                <p v-if="Pic!==''"><b>上传截图：</b><a v-bind:href="Pic" target="_blank">{{Pic}}</a></p>
+                <p v-if="Pic!==''"><b>加工截图：</b>
+                <vue-preview :slides="[{src: Pic,msrc: Pic,w: 600,h: 400}]" @click="closeHandle"></vue-preview>
+                </p>
               </div>
             </div>
           </div>
@@ -153,6 +155,9 @@ export default {
         path: '/Pages/ThdInfo',
         query: { ID: item.ID }
       })
+    },
+    closeHandle: function () {
+      console.log('999999999999999....')
     }
   }
 }
