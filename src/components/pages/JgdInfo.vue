@@ -21,7 +21,7 @@
           </div>
           <div v-if="AttachmentList.length > 0" class="mui-card">
             <!--页眉，放置标题-->
-            <div class="mui-card-header">附件信息</div>
+            <div class="mui-card-header">加工单内容</div>
             <!--内容区-->
             <div class="mui-card-content">
               <vue-preview :slides="Attachment" @click="closeHandle"></vue-preview>
@@ -164,6 +164,7 @@ export default {
   },
   data () {
     return {
+      IsUpload:0,
       EditUrl: '#/Pages/JgdEdit?ID=',
       OrderID: '',
       OrderNo: '',
@@ -232,6 +233,10 @@ export default {
     },
     saveOrder (orderid) {
       var _this = this
+      if(!this.IsUpload && !confirm('未确认上传附件，确认要提交吗？')){
+        return false;
+      }
+
       _this.$loading('正在提交')
       axios.post('/handler/user/processingorder/exeorder', qs.stringify({
         OrderID: orderid,
@@ -286,6 +291,7 @@ export default {
       console.log(file)
       const data = new FormData()
       data.append('file', file)
+      data.append('waterflag',this.Status=='Uploaded'?'1':'0')
       axios.post('/handler/user/upload/upload', data, {
         headers: {
           'Content-Type': 'multipart/form-data'
@@ -304,6 +310,7 @@ export default {
           w: 600,
           h: 400
         })
+        _this.IsUpload = 1
         _this.$toast.bottom(res.data.msg)
         _this.$loading.close()
       }).catch(err => {
