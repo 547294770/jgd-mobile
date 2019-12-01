@@ -19,6 +19,9 @@
                         <li class="mui-table-view-cell">
                             <a @click="goCompanyInfo" class="mui-navigate-right">公司信息</a>
                         </li>
+                        <li class="mui-table-view-cell">
+                            <a @click="goPassword" class="mui-navigate-right">设置密码</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -68,6 +71,12 @@ export default {
     goCompanyInfo () {
       this.$router.push({
         path: '/Pages/CompanyInfo',
+        query: {}
+      })
+    },
+    goPassword () {
+      this.$router.push({
+        path: '/Pages/Password',
         query: {}
       })
     }

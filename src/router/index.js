@@ -17,6 +17,8 @@ import PagesThdInfo from '@/components/pages/ThdInfo'
 import PagesThdList from '@/components/pages/ThdList'
 import PagesFeeInfo from '@/components/pages/FeeInfo'
 import PagesFeeList from '@/components/pages/FeeList'
+import PagesRejectAdd from '@/components/pages/RejectAdd'
+import PagesPassword from '@/components/pages/Password'
 
 import 'vue2-toast/lib/toast.css'
 import 'vuejs-dialog/dist/vuejs-dialog.min.css'
@@ -112,6 +114,16 @@ export default new Router({
       path: '/Pages/FeeList',
       name: 'PagesFeeList',
       component: PagesFeeList
+    },
+    {
+      path: '/Pages/RejectAdd',
+      name: 'PagesRejectAdd',
+      component: PagesRejectAdd
+    },
+    {
+      path: '/Pages/Password',
+      name: 'PagesPassword',
+      component: PagesPassword
     }
   ]
 })

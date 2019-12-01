@@ -91,6 +91,10 @@
                     <label>利迅达提货</label>
                     <input name="DelType" v-model="DelType" value="LXD" type="radio">
                   </div>
+                  <div class="mui-input-row mui-radio">
+                    <label>材料在利迅达仓库</label>
+                    <input name="DelType" v-model="DelType" value="IsWareHouse" type="radio">
+                  </div>
                 </div>
                 <div v-if="Status=='NoticePickUp'">
                   <div class="mui-input-row mui-radio">
@@ -145,6 +149,7 @@
             <a v-if="Status=='Produced'" href="#" @click="saveOrder(ID)" class="btn btn-primary block">填写提货单</a>
             <a v-if="Status=='AlreadyGoods'" href="#" @click="saveOrder(ID)" class="btn btn-primary block">确认加工费</a>
             <a v-if="Status=='Shipped'" href="#" @click="saveOrder(ID)" class="btn btn-primary block">确认收货</a>
+            <a v-if="!IsReject" :href="'#/Pages/RejectAdd?OrderID='+OrderID" class="btn btn-danger block">错误驳回</a>
           </div>
         <Footer></Footer>
     </div>
@@ -170,6 +175,7 @@ export default {
       OrderNo: '',
       CreateAt: '',
       Content: '',
+      IsReject: false,
       Pic: '',
       Status: 'None',
       StatusName: '未指定',
@@ -206,6 +212,7 @@ export default {
     initPageData: function () {
       let params = this.$route.query
       var _this = this
+      _this.OrderID = params.ID
       _this.$loading('加载中')
       axios.post('/handler/user/processingorder/info', qs.stringify({
         OrderID: params.ID

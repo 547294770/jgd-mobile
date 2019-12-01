@@ -6,30 +6,25 @@
             <div class="mui-scroll-wrapper">
                 <div class="mui-scroll">
                     <div class="mui-input-group">
-                        <div class="mui-input-row">
-                            <label>公司名称</label>
-                            <input type="text" v-model="Companyinfo.CompanyName" placeholder="点击输入公司名称" class="mui-input-clear mui-input">
+                        <div v-if="Companyinfo.PasswordBinding===''" class="mui-input-row">
+                            <label>密码</label>
+                            <input type="password" v-model="Companyinfo.Password" placeholder="点击输入密码" class="mui-input-clear mui-input">
+                        </div>
+                        <div v-if="Companyinfo.PasswordBinding!==''" class="mui-input-row">
+                            <label>原密码</label>
+                            <input type="password" v-model="Companyinfo.PasswordOld" placeholder="点击输入密码" class="mui-input-clear mui-input">
+                        </div>
+                        <div v-if="Companyinfo.PasswordBinding!==''" class="mui-input-row">
+                            <label>新密码</label>
+                            <input type="password" v-model="Companyinfo.Password" placeholder="点击输入密码" class="mui-input-clear mui-input">
                         </div>
                         <div class="mui-input-row">
-                            <label>联系人</label>
-                            <input type="text" v-model="Companyinfo.Contact" placeholder="点击输入联系人" class="mui-input-clear mui-input">
+                            <label>确认密码</label>
+                            <input type="password" v-model="Companyinfo.Password2" placeholder="点击输入密码" class="mui-input-clear mui-input">
                         </div>
-                        <div class="mui-input-row">
-                            <label>联系手机</label>
-                            <input type="text" v-model="Companyinfo.Mobile" placeholder="点击输入联系手机" class="mui-input-clear mui-input">
-                        </div>
-                        <div class="mui-input-row">
-                            <label>固定电话</label>
-                            <input type="text" v-model="Companyinfo.Tel" placeholder="点击输入固定电话" class="mui-input-clear mui-input">
-                        </div>
-                        <div class="mui-input-row">
-                            <label>地址</label>
-                            <input type="text" v-model="Companyinfo.Address" placeholder="点击输入地址" class="mui-input-clear mui-input">
-                        </div>
-                        <div v-if="!Companyinfo.IsPass" class="mui-input-row text-align-center"><span class="mui-badge mui-badge-danger">信息审核中</span></div>
                     </div>
                     <div class="mui-content-padded">
-                        <button @click="onSubmit" class="btn btn-primary block">保存</button>
+                        <button @click="onSubmit" class="btn btn-primary block">保存设置</button>
                     </div>
                 </div>
             </div>
@@ -48,7 +43,7 @@ import '../../../static/css/font-awesome.padding.css'
 import axios from 'axios'
 import qs from 'qs'
 export default {
-  name: 'CompanyInfo',
+  name: 'Password',
   components: {
     Header,
     Footer
@@ -56,17 +51,15 @@ export default {
   data () {
     return {
       Companyinfo: {
-        Address: '',
-        CompanyName: '',
-        Contact: '',
-        Tel: '',
-        Mobile: '',
-        IsPass: false
+        PasswordBinding: '',
+        Password: '',
+        Password2: '',
+        PasswordOld: ''
       }
     }
   },
   created () {
-    this.GLOBAL.HeaderText = '公司信息'
+    this.GLOBAL.HeaderText = '密码设置'
     this.loadData()
   },
   methods: {
@@ -75,7 +68,7 @@ export default {
       axios.get('/handler/user/user/companyinfo', {})
         .then(function (res) {
           if (res.data.data) {
-            _this.Companyinfo = res.data.data
+              _this.Companyinfo.PasswordBinding = res.data.data.Password
           }
         })
         .catch(function (error) {
@@ -85,10 +78,10 @@ export default {
     onSubmit: function () {
       let _this = this
       _this.$loading('正在提交')
-      axios.post('/handler/user/user/updatecompany', qs.stringify(this.Companyinfo)).then(res => {
+      axios.post('/handler/user/user/updatepassword', qs.stringify(this.Companyinfo)).then(res => {
         if (res.data.code === 0) {
           console.log('res:' + res)
-          _this.$toast.bottom('提交成功，等待审核。')
+          _this.$toast.bottom('设置成功')
           _this.$router.push({
             path: '/Settings',
             query: ''
@@ -274,8 +267,5 @@ export default {
 }
 .mui-input-row input[type=text]{
     color: #969696;
-}
-.text-align-center{
-    text-align: center;
 }
 </style>
