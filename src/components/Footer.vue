@@ -6,7 +6,7 @@
         </a>
         <a class="mui-tab-item mui-active" href="#/Pages/JgdAdd">
             <span class="fa fa-edit fa-lg mui-icon"></span>
-            <span class="mui-tab-label">发布</span>
+            <span class="mui-tab-label">加工下单</span>
         </a>
         <a :class="active('/Settings')" href="#/Settings">
             <span class="mui-icon mui-icon-gear"></span>

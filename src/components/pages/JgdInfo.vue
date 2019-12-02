@@ -73,6 +73,7 @@
                 <div v-for="(item,index) in FeeList" :key="index">
                   <div>单号：{{item.FeeNo}}</div>
                   <div>类型：{{item.TypeName}}</div>
+                  <div>图片：<img v-if="item.Pic" :src="item.Pic" style="width:80px"></div>
                   <div>明细：{{item.Content}}</div>
                 </div>
               </div>
@@ -109,7 +110,7 @@
                 <div v-if="Status=='ConfirmDeliveryMethod'">
                   <div v-if="DelType=='Self'">
                     <h5>送货日期：</h5><input type="date" v-model="Delivery.DeliveryAt"  />
-                    <h5>时间段：</h5><input type="text" placeholder="08:00:00-18:00:00" v-model="Delivery.TimeSection"  />
+                    <h5>时间段：</h5><input type="time" style="width:45%" placeholder="08:00" v-model="Delivery.Time1"  />-<input type="time" style="width:45%" placeholder="08:00" v-model="Delivery.Time2"  />
                     <h5>材料内容：</h5>
                     <div class="mui-input-row" style="margin: 10px 5px;">
                       <textarea id="textarea" v-model="Delivery.Content" rows="4" placeholder="填写材料内容说明。"></textarea>
@@ -123,7 +124,7 @@
                 <div v-if="Status=='ConfirmPickUpMethod'">
                   <div v-if="PickType=='Self'">
                     <h5>提货日期：</h5><input type="date" v-model="PickUp.PickUpAt"  />
-                    <h5>时间段：</h5><input type="text" placeholder="08:00:00-18:00:00" v-model="PickUp.TimeSection"  />
+                    <h5>时间段：</h5><input type="time" style="width:45%" placeholder="08:00" v-model="PickUp.Time1"  />-<input type="time" style="width:45%" placeholder="08:00" v-model="PickUp.Time2"  />
                     <h5>提货内容：</h5>
                     <div class="mui-input-row" style="margin: 10px 5px;">
                       <textarea id="textarea" v-model="PickUp.Content" rows="4" placeholder="填写提货内容说明。"></textarea>
@@ -193,13 +194,17 @@ export default {
         Content: '',
         VehicleInfo: '',
         SourceID: '',
-        DeliveryAt: ''
+        DeliveryAt: '',
+        Time1: '09:30',
+        Time2: '18:30'
       },
       PickUp: {
         Content: '',
         VehicleInfo: '',
         SourceID: '',
-        PickUpAt: ''
+        PickUpAt: '',
+        Time1: '09:30',
+        Time2: '18:30'
       }
     }
   },
@@ -240,7 +245,7 @@ export default {
     },
     saveOrder (orderid) {
       var _this = this
-      if(!this.IsUpload && !confirm('未确认上传附件，确认要提交吗？')){
+      if(this.Status === 'Uploaded' && !this.IsUpload && !confirm('未确认上传附件，确认要提交吗？')){
         return false;
       }
 

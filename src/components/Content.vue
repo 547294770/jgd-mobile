@@ -22,6 +22,10 @@
                     <span class="fa fa-list-ul ffa"></span>
                     <div class="mui-media-body">加工单</div></a>
                 </li>
+                <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#/Pages/JgdAdd">
+                    <span class="fa fa-edit ffa"></span>
+                    <div class="mui-media-body">加工下单</div></a>
+                </li>
             </ul>
         </div>
         <div id="tabbar-with-map" class="mui-control-content">
