@@ -25,11 +25,11 @@
             <!--内容区-->
             <div class="mui-card-content">
               <vue-preview :slides="Attachment" @click="closeHandle"></vue-preview>
-              <div class="detail">
+              <!-- <div class="detail">
                 <div v-if="Status=='Uploaded'">
                   <input type="file" ref="fileInt"><button @click="changeHandle">上传</button>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
           <div v-if="DeliveryList.length > 0" class="mui-card">
@@ -79,7 +79,7 @@
               </div>
             </div>
           </div>
-          <div class="mui-card">
+          <div v-if="Status=='Print'||Status=='NoticePickUp'||Status=='ConfirmDeliveryMethod'||Status=='ConfirmPickUpMethod'" class="mui-card">
             <!--内容区-->
             <div class="mui-card-content">
               <div class="detail">
@@ -138,7 +138,14 @@
               </div>
             </div>
           </div>
-          <div class="mui-content-padded">
+          <div v-if="Status=='Uploaded'||Status=='AlreadyGoods'||Status=='NoticePickUp'" class="mui-card">
+            <div class="mui-card-content">
+              <div class="detail">
+                <p class="pmb0"><b>密码：</b><input type="password" v-model="PassWord" class="password"  /></p>
+              </div>
+            </div>
+          </div>
+          <div class="mui-content-padded button-list">
             <a v-if="Status=='None'" href="#" @click="saveOrder(ID)" class="btn btn-primary block">提交</a>
             <a v-if="Status=='None'" v-bind:href='EditUrl+ID' class="btn btn-primary block mt10">修改</a>
             <a v-if="Status=='None'" href="#" @click="deleteOrder(ID)" class="btn btn-danger block mt10">删除</a>
@@ -149,7 +156,7 @@
             <a v-if="Status=='ConfirmPickUpMethod'" href="#" @click="saveOrder(ID)" class="btn btn-primary block">提交提货资料</a>
             <a v-if="Status=='Produced'" href="#" @click="saveOrder(ID)" class="btn btn-primary block">填写提货单</a>
             <a v-if="Status=='AlreadyGoods'" href="#" @click="saveOrder(ID)" class="btn btn-primary block">确认加工费</a>
-            <a v-if="Status=='Shipped'" href="#" @click="saveOrder(ID)" class="btn btn-primary block">确认收货</a>
+            <!-- <a v-if="Status=='Shipped'" href="#" @click="saveOrder(ID)" class="btn btn-primary block">确认收货</a> -->
             <a v-if="!IsReject" :href="'#/Pages/RejectAdd?OrderID='+OrderID" class="btn btn-danger block">错误驳回</a>
           </div>
         <Footer></Footer>
@@ -170,6 +177,7 @@ export default {
   },
   data () {
     return {
+      PassWord: '',
       IsUpload:0,
       EditUrl: '#/Pages/JgdEdit?ID=',
       OrderID: '',
@@ -245,9 +253,9 @@ export default {
     },
     saveOrder (orderid) {
       var _this = this
-      if(this.Status === 'Uploaded' && !this.IsUpload && !confirm('未确认上传附件，确认要提交吗？')){
-        return false;
-      }
+      // if(this.Status === 'Uploaded' && !this.IsUpload && !confirm('未确认上传附件，确认要提交吗？')){
+      //   return false;
+      // }
 
       _this.$loading('正在提交')
       axios.post('/handler/user/processingorder/exeorder', qs.stringify({
@@ -257,7 +265,8 @@ export default {
         AttachmentLength: _this.AttachmentList.length,
         Attachment: _this.AttachmentList,
         Delivery: _this.Delivery,
-        PickUp: _this.PickUp
+        PickUp: _this.PickUp,
+        PassWord: _this.PassWord
       })).then(function (res) {
         if (res.data.code === 0) {
           if (res.data.data.Status === 'Print' || (res.data.data.Status === 'ConfirmDeliveryMethod' && res.data.data.DelType === 'Self')) {
@@ -357,5 +366,16 @@ export default {
 }
 .jgd-info-delete{
   margin-top: 10px;
+}
+.password{
+  width: 200px;
+  margin: 0px;
+}
+.detail .pmb0{
+  margin-bottom: 0px;
+}
+
+.button-list a{
+  margin-bottom: 10px;
 }
 </style>
