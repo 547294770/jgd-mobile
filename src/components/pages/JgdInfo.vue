@@ -269,7 +269,7 @@ export default {
         PassWord: _this.PassWord
       })).then(function (res) {
         if (res.data.code === 0) {
-          if (res.data.data.Status === 'Print' || (res.data.data.Status === 'ConfirmDeliveryMethod' && res.data.data.DelType === 'Self')) {
+          if (res.data.data.Status === 'Print' || (res.data.data.Status === 'ConfirmDeliveryMethod' && res.data.data.DelType === 'Self')|| (res.data.data.Status === 'ConfirmPickUpMethod' && res.data.data.PickType === 'Self')) {
             // path = '/Pages/JgdInfo'
             // query = { ID: _this.ID }
             _this.reload()

@@ -26,6 +26,14 @@
                             <label>地址</label>
                             <input type="text" v-model="Companyinfo.Address" placeholder="点击输入地址" class="mui-input-clear mui-input">
                         </div>
+                        <div class="mui-input-row">
+                            <label>名片</label>
+                            <a v-bind:href="Companyinfo.Pic" target="_blank" class="display-pic">查看</a>
+                        </div>
+                        <div class="mui-input-row">
+                            <input class="button-file" type="file" ref="fileInt">
+                            <button @click="changeHandle">上传</button>
+                        </div>
                         <div v-if="!Companyinfo.IsPass" class="mui-input-row text-align-center"><span class="mui-badge mui-badge-danger">信息审核中</span></div>
                     </div>
                     <div class="mui-content-padded">
@@ -61,6 +69,7 @@ export default {
         Contact: '',
         Tel: '',
         Mobile: '',
+        Pic: '',
         IsPass: false
       }
     }
@@ -102,6 +111,33 @@ export default {
         console.log('error:' + error)
         _this.$loading.close()
         _this.$toast.bottom('提交失败' + error)
+      })
+    },
+    changeHandle () {
+      var _this = this
+      const file = this.$refs.fileInt.files[0]
+      if(!file) {
+        _this.$toast.bottom('请选择图片')
+        return;
+      }
+      _this.$loading('正在上传')
+      console.log(file)
+      const data = new FormData()
+      data.append('file', file)
+      axios.post('/handler/user/upload/upload', data, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(res => {
+        console.log(res)
+        _this.$refs.fileInt.value = null
+        _this.Companyinfo.Pic = res.data.data.src
+        console.log(_this.Companyinfo.Pic)
+        _this.$toast.bottom(res.data.msg)
+        _this.$loading.close()
+      }).catch(err => {
+        console.log(err)
+        _this.$loading.close()
       })
     }
   }
@@ -277,5 +313,15 @@ export default {
 }
 .text-align-center{
     text-align: center;
+}
+.button-file{
+    width: 200px;
+    padding-left: 15px;
+}
+.display-pic{
+    display: inline-block;
+    margin: 0px;
+    padding: 11px 0px;
+    line-height: 17px;
 }
 </style>
