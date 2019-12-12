@@ -11,6 +11,7 @@
                 <p><b>提货内容：</b><span>{{Content}}</span></p>
                 <p><b>车辆信息：</b><span>{{VehicleInfo}}</span></p>
                 <p><b>提货方式：</b><span>{{TypeName}}</span></p>
+                <p v-if="item.Pic"><b>上传图片：</b><vue-preview :slides="[{src: Pic,msrc: Pic,w: 600,h: 400}]" @click="closeHandle"></vue-preview></p>
               </div>
             </div>
           </div>
@@ -38,7 +39,8 @@ export default {
       ProcessingNo: '',
       TypeName: '',
       SourceID: '',
-      PickUpAt: ''
+      PickUpAt: '',
+      Pic: ''
     }
   },
   created: function () {
@@ -64,6 +66,9 @@ export default {
         console.log(error)
         _this.$loading.close()
       })
+    },
+    closeHandle: function () {
+      console.log('999999999999999....')
     }
   }
 }

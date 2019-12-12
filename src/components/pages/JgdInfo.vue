@@ -60,6 +60,7 @@
                   <div>时 间 段：{{item.TimeSection}}</div>
                   <div>提货内容：{{item.Content}}</div>
                   <div>车辆信息：{{item.VehicleInfo}}</div>
+                  <div v-if="item.Pic">图   片：<vue-preview :slides="[{src: item.Pic,msrc: item.Pic,w: 600,h: 400}]" @click="closeHandle"></vue-preview></div>
                 </div>
               </div>
             </div>
@@ -132,6 +133,12 @@
                     <h5>车辆信息：</h5>
                     <div class="mui-input-row" style="margin: 10px 5px;">
                       <textarea id="textarea1"  v-model="PickUp.VehicleInfo" rows="2" placeholder="车牌、提货人联系方式、姓名等。"></textarea>
+                    </div>
+                    <h5>上传图片：</h5>
+                    <div class="mui-input-row"><a v-if="PickUp.Pic" v-bind:href="PickUp.Pic" target="_blank">查看</a></div>
+                    <div class="mui-input-row upload-area">
+                      <div class="file"><input type="file" ref="filePickUp"></div>
+                      <div class="button"><button @click="changeHandle('Pickup')">上传</button></div>
                     </div>
                   </div>
                 </div>
@@ -212,7 +219,8 @@ export default {
         SourceID: '',
         PickUpAt: '',
         Time1: '09:30',
-        Time2: '18:30'
+        Time2: '18:30',
+        Pic: ''
       }
     }
   },
@@ -305,10 +313,12 @@ export default {
         _this.$loading.close()
       })
     },
-    changeHandle () {
+    changeHandle (type) {
       var _this = this
       _this.$loading('正在上传')
-      const file = this.$refs.fileInt.files[0]
+      console.log('9999999999999999999999999----')
+      let file = this.$refs.filePickUp.files[0]
+     
       console.log(file)
       const data = new FormData()
       data.append('file', file)
@@ -319,19 +329,24 @@ export default {
         }
       }).then(res => {
         console.log(res)
-        _this.AttachmentList.push({
-          SourceID: _this.OrderID,
-          FileSize: res.data.data.size,
-          FilePath: res.data.data.src,
-          FileName: res.data.data.file,
-          Name: res.data.data.name})
-        _this.Attachment.push({
-          src: res.data.data.src,
-          msrc: res.data.data.src,
-          w: 600,
-          h: 400
-        })
-        _this.IsUpload = 1
+        _this.PickUp.Pic = res.data.data.src
+        // if(type === 'Pickup'){
+        //   _this.PickUp.Pic = res.data.data.src
+        // }else{
+        //     _this.AttachmentList.push({
+        //     SourceID: _this.OrderID,
+        //     FileSize: res.data.data.size,
+        //     FilePath: res.data.data.src,
+        //     FileName: res.data.data.file,
+        //     Name: res.data.data.name})
+        //   _this.Attachment.push({
+        //     src: res.data.data.src,
+        //     msrc: res.data.data.src,
+        //     w: 600,
+        //     h: 400
+        //   })
+        //   _this.IsUpload = 1
+        // }
         _this.$toast.bottom(res.data.msg)
         _this.$loading.close()
       }).catch(err => {
