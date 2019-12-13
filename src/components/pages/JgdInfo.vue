@@ -65,6 +65,16 @@
               </div>
             </div>
           </div>
+          <div v-if="PickUpPic" class="mui-card">
+            <!--页眉，放置标题-->
+            <div class="mui-card-header">提货材料图片</div>
+            <!--内容区-->
+            <div class="mui-card-content">
+              <div class="detail">
+                <div><vue-preview :slides="[{src: PickUpPic,msrc: PickUpPic,w: 600,h: 400}]" @click="closeHandle"></vue-preview></div>
+              </div>
+            </div>
+          </div>
           <div v-if="FeeList.length > 0" class="mui-card">
             <!--页眉，放置标题-->
             <div class="mui-card-header">加工费</div>
@@ -74,7 +84,7 @@
                 <div v-for="(item,index) in FeeList" :key="index">
                   <div>单号：{{item.FeeNo}}</div>
                   <div>类型：{{item.TypeName}}</div>
-                  <div>图片：<img v-if="item.Pic" :src="item.Pic" style="width:80px"></div>
+                  <div>图片：<vue-preview :slides="[{src: item.Pic,msrc: item.Pic,w: 600,h: 400}]" @click="closeHandle"></vue-preview></div>
                   <div>明细：{{item.Content}}</div>
                 </div>
               </div>
@@ -193,6 +203,7 @@ export default {
       Content: '',
       IsReject: false,
       Pic: '',
+      PickUpPic: '',
       Status: 'None',
       StatusName: '未指定',
       DelTypeName: '未指定',
