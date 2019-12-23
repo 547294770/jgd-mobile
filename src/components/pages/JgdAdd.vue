@@ -65,8 +65,8 @@ export default {
           _this.form.Content = ''
           _this.form.Pic = ''
           _this.$router.push({
-            path: '/Pages/JgdTodoList',
-            query: ''
+            path: '/Pages/JgdInfo',
+            query: { ID: res.data.data.ID }
           })
         } else {
           _this.$toast.bottom(res.data.msg)

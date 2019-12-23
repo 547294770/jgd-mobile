@@ -8,8 +8,9 @@
                 <li v-for="(item,index) in items" @click="jgdInfo(item)" class="mui-table-view-cell" :key="index">
                   <a class="mui-navigate-right" href="javascript:;">
                     <span v-if="item.Status=='None'" class="mui-badge mui-badge-primary">草稿</span>
+                    <span v-if="item.Status=='Processing'" class="mui-badge mui-badge-primary">待确认送货方式</span>
                     <span v-if="item.Status=='Uploaded'" class="mui-badge mui-badge-primary">待确认加工内容</span>
-                    <span v-if="item.Status=='Print'" class="mui-badge mui-badge-primary">待确认送货方式</span>
+                    <!-- <span v-if="item.Status=='Print'" class="mui-badge mui-badge-primary">待确认送货方式</span> -->
                     <span v-if="item.Status=='ConfirmDeliveryMethod'" class="mui-badge mui-badge-primary">待录入送货资料</span>
                     <span v-if="item.Status=='NoticePickUp'" class="mui-badge mui-badge-primary">待确认提货方式</span>
                     <span v-if="item.Status=='ConfirmPickUpMethod'" class="mui-badge mui-badge-primary">待录入提货信息</span>

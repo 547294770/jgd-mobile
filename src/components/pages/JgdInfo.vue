@@ -90,11 +90,11 @@
               </div>
             </div>
           </div>
-          <div v-if="Status=='Print'||Status=='NoticePickUp'||Status=='ConfirmDeliveryMethod'||Status=='ConfirmPickUpMethod'" class="mui-card">
+          <div v-if="Status=='Processing'||Status=='NoticePickUp'||Status=='ConfirmDeliveryMethod'||Status=='ConfirmPickUpMethod'" class="mui-card">
             <!--内容区-->
             <div class="mui-card-content">
               <div class="detail">
-                <div v-if="Status=='Print'">
+                <div v-if="Status=='Processing'">
                   <div class="mui-input-row mui-radio">
                     <label>自送</label>
                     <input name="DelType" v-model="DelType" value="Self" type="radio">
@@ -167,7 +167,8 @@
             <a v-if="Status=='None'" v-bind:href='EditUrl+ID' class="btn btn-primary block mt10">修改</a>
             <a v-if="Status=='None'" href="#" @click="deleteOrder(ID)" class="btn btn-danger block mt10">删除</a>
             <a v-if="Status=='Uploaded'" href="#" @click="saveOrder(ID)" class="btn btn-primary block">提交确认</a>
-            <a v-if="Status=='Print'" href="#" @click="saveOrder(ID)" class="btn btn-primary block">确认送货方式</a>
+            <a v-if="Status=='Processing'" href="#" @click="saveOrder(ID)" class="btn btn-primary block">确认送货方式</a>
+            <!-- <a v-if="Status=='Print'" href="#" @click="saveOrder(ID)" class="btn btn-primary block">确认送货方式</a> -->
             <a v-if="Status=='ConfirmDeliveryMethod'" href="#" @click="saveOrder(ID)" class="btn btn-primary block">提交送货资料</a>
             <a v-if="Status=='NoticePickUp'" href="#" @click="saveOrder(ID)" class="btn btn-primary block">确认提货方式</a>
             <a v-if="Status=='ConfirmPickUpMethod'" href="#" @click="saveOrder(ID)" class="btn btn-primary block">提交提货资料</a>
@@ -288,11 +289,11 @@ export default {
         PassWord: _this.PassWord
       })).then(function (res) {
         if (res.data.code === 0) {
-          if (res.data.data.Status === 'Print' || (res.data.data.Status === 'ConfirmDeliveryMethod' && res.data.data.DelType === 'Self')|| (res.data.data.Status === 'ConfirmPickUpMethod' && res.data.data.PickType === 'Self')) {
+          if (res.data.data.Status === 'Processing' || (res.data.data.Status === 'ConfirmDeliveryMethod' && res.data.data.DelType === 'Self')|| (res.data.data.Status === 'ConfirmPickUpMethod' && res.data.data.PickType === 'Self')) {
             // path = '/Pages/JgdInfo'
             // query = { ID: _this.ID }
             _this.reload()
-            console.log('res.data.data.Status======' + res.data.data.Status)
+            console.log('res.data.data.Status======111' + res.data.data.Status)
             console.log('_this.reload======' + _this.reload)
           } else {
             _this.$router.push({
