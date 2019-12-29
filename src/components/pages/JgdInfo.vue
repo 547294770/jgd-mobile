@@ -162,7 +162,7 @@
               </div>
             </div>
           </div>
-          <div class="mui-content-padded button-list">
+          <div v-if="IsSelf" class="mui-content-padded button-list">
             <a v-if="Status=='None'" href="#" @click="saveOrder(ID)" class="btn btn-primary block">提交</a>
             <a v-if="Status=='None'" v-bind:href='EditUrl+ID' class="btn btn-primary block mt10">修改</a>
             <a v-if="Status=='None'" href="#" @click="deleteOrder(ID)" class="btn btn-danger block mt10">删除</a>
@@ -203,6 +203,7 @@ export default {
       CreateAt: '',
       Content: '',
       IsReject: false,
+      IsSelf: false,
       Pic: '',
       PickUpPic: '',
       Status: 'None',
